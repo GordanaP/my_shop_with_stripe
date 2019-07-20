@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Homepage')
+
 @section('content')
     <div class="row">
         <div class="col-md-4">
@@ -16,14 +18,14 @@
                 <div class="flex items-center p-3">
                     <a href="{{ route('users.edit', Auth::user()) }}">Edit</a>
                     <span class="mx-2">|</span>
-                    <a href="#">Delete</a>
 
-
+                    @include('users.forms._delete')
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
-            <a href="" class="font-bold" style="color: inherit; text-decoration: none">
+            <a href="nav-brand" class="font-bold nav-item" style="color: inherit; text-decoration: none">
                 <div class="card" style="height: 350px">
                     <div class="my-auto text-2xl">
                         <p class="text-center mb-1"><i class="fa fa-plus text-gray-500"></i></p>
@@ -33,4 +35,20 @@
             </a>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+
+        var deleteAccountButton = $('#deleteAccountButton');
+        var deleteAccountUrl = "{{ route('users.destroy', Auth::user()) }}";
+        var redirectToUrl = "{{ route('welcome') }}";
+
+        deleteAccountButton.on('click', function(){
+
+            swalConfirmDelete(deleteAccountUrl, redirectToUrl);
+
+        });
+
+    </script>
 @endsection

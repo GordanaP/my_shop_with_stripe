@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -101,7 +102,13 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $user->delete();
 
+        Session::flush();
+
+        return response([
+            'message' => 'Your account has been deleted!'
+        ]);
     }
 
     /**
