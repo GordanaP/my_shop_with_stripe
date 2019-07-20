@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     @include('partials._head')
 </head>
-<body>
+
+<body class="roboto">
     <div id="app">
 
         @include('partials._navbar')
@@ -15,4 +17,5 @@
 
     @include('partials._scripts')
 </body>
+
 </html>
