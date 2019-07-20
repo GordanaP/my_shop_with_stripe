@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Customer;
 use App\Services\Validated;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
@@ -51,6 +52,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the customer associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    /**
      * Set the user's email.
      *
      * @param  string  $value
@@ -85,4 +96,18 @@ class User extends Authenticatable
 
         Session::flush();
     }
+
+    /**
+     * Add the customer's profile.
+     *
+     * @param array $data
+     * @return void
+     */
+    public function addCustomer(array $data)
+    {
+        $customer = Customer::fromForm($data);
+
+        $this->customer()->save($customer);
+    }
+
 }

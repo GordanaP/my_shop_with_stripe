@@ -1,13 +1,16 @@
 /**
- * Clear server side error on new input.
+ * Remove a server side error on new input.
  *
  * @return void
  */
 function clearServerSideErrorOnNewInput()
 {
     $("input, textarea").on('keypress', function() {
-        $(this).removeClass('is-invalid');
-        $(this).siblings(".invalid-feedback").remove();
+        clearServerSideError($(this))
+    });
+
+    $("select").on('change', function () {
+        clearServerSideError($(this))
     });
 }
 
@@ -70,4 +73,16 @@ function redirectTo(redirectToUrl)
     window.location.reload(true);
 
     location.href = redirectToUrl
+}
+
+/**
+ * Remove a server side error.
+ *
+ * @param  JQ object field
+ * @return void
+ */
+function clearServerSideError(field)
+{
+    field.removeClass('is-invalid');
+    field.siblings(".invalid-feedback").remove();
 }

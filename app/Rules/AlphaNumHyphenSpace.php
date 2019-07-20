@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class AlphaNum implements Rule
+class AlphaNumHyphenSpace implements Rule
 {
     /**
      * Determine if the validation rule passes.
@@ -15,7 +15,7 @@ class AlphaNum implements Rule
      */
     public function passes($attribute, $value)
     {
-        return preg_match('/^[a-zA-Z0-9]+$/', $value);
+        return preg_match('/^[a-zA-Z0-9- ]+$/', $value);
     }
 
     /**
@@ -25,6 +25,6 @@ class AlphaNum implements Rule
      */
     public function message()
     {
-        return 'The :attribute may contain only letters, and numbers.';
+        return 'The :attribute may contain only letters, numbers, dashes and spaces.';
     }
 }

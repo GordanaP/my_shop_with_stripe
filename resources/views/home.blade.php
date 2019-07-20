@@ -25,7 +25,8 @@
         </div>
 
         <div class="col-md-4">
-            <a href="nav-brand" class="font-bold nav-item" style="color: inherit; text-decoration: none">
+            <a href="{{ route('users.customers.create') }}"
+            class="font-bold" style="color: inherit; text-decoration: none">
                 <div class="card" style="height: 350px">
                     <div class="my-auto text-2xl">
                         <p class="text-center mb-1"><i class="fa fa-plus text-gray-500"></i></p>
