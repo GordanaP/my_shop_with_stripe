@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -46,10 +42,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //
     }
@@ -79,15 +75,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
     {
-        $validated_data = $this->getData($request->validated());
-
-        $user->update($validated_data);
+        $user->updateAccount($request->validated());
 
         Alert::success('Success!', 'Your account has been updated');
 
@@ -102,28 +96,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
-        Session::flush();
+        $user->deleteAccount();
 
         return response([
             'message' => 'Your account has been deleted!'
         ]);
-    }
-
-    /**
-     * Get the user's data.
-     *
-     * @param  array $data
-     * @return array
-     */
-    protected function getData(array $data)
-    {
-        $attributes = collect($data)->only('name', 'email')->toArray();
-
-        $data['password'] != null
-            ? $attributes['password'] = Hash::make($data['password']) : '';
-
-        return $attributes;
     }
 }

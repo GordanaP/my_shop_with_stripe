@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Services\Validated;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,5 +59,30 @@ class User extends Authenticatable
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);
+    }
+
+    /**
+     * Update the user's account.
+     *
+     * @param  array $data]
+     * @return void
+     */
+    public function updateAccount(array $data)
+    {
+        $validated_data = Validated::getUser($data);
+
+        $this->update($validated_data);
+    }
+
+    /**
+     * Delete the user's account.
+     *
+     * @return void
+     */
+    public function deleteAccount()
+    {
+        $this->delete();
+
+        Session::flush();
     }
 }
