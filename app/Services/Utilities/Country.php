@@ -270,4 +270,9 @@ class Country
     {
         return array_values(static::all());
     }
+
+    public static function getName($country_code)
+    {
+        return array_search($country_code, static::all());
+    }
 }

@@ -69,6 +69,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         return view('users.edit', compact('user'));
     }
 
@@ -81,6 +83,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        $this->authorize('update', $user);
+
         $user->updateAccount($request->validated());
 
         Alert::success('Success!', 'Your account has been updated');
@@ -96,6 +100,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $user->deleteAccount();
 
         return response([

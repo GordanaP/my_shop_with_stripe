@@ -1,4 +1,4 @@
-<form action="{{ route('users.update', Auth::user()) }}" method="POST">
+<form action="{{ route('users.update', $user) }}" method="POST">
 
     @csrf
     @method('PUT')
@@ -8,7 +8,7 @@
         <div class="col-sm-9">
             <input type="text" name="name" id="name"
             placeholder="Enter your name"
-            value="{{ old('name') ?: Auth::user()->name }}"
+            value="{{ old('name') ?: $user->name }}"
             class="form-control @error('name') is-invalid @enderror" />
 
             @info(['field' => 'name'])
@@ -28,7 +28,7 @@
         <div class="col-sm-9">
             <input type="text" name="email" id="email"
             placeholder="email@example.com"
-            value="{{ old('email') ?: Auth::user()->email }}"
+            value="{{ old('email') ?: $user->email }}"
             class="form-control @error('email') is-invalid @enderror" />
 
             @info(['field' => 'email'])

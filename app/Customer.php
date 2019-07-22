@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\Customer\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+    use HasAttributes;
+
     /**
      * The attributes that are mass assignable.
      *

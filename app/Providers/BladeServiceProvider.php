@@ -25,5 +25,6 @@ class BladeServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('components.validation_info', 'info');
+        Blade::component('components.settings_option', 'settings');
     }
 }

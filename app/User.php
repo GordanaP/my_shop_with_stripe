@@ -110,4 +110,35 @@ class User extends Authenticatable
         $this->customer()->save($customer);
     }
 
+    /**
+     * Determine if the user has profile.
+     *
+     * @return boolean
+     */
+    public function hasProfile()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Determine if the user owns the model.
+     *
+     * @param  \App\Model $model
+     * @return boolean
+     */
+    public function isModelOwner($model)
+    {
+        return $this->id == $model->user_id;
+    }
+
+    /**
+     * Determine if the authenticate user is the requested user.
+     *
+     * @param  \App|User  $user
+     * @return boolean
+     */
+    public function isRequestedUser($user)
+    {
+        return $this->id == $user->id;
+    }
 }
