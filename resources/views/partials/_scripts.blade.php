@@ -1,4 +1,5 @@
 <script src="{{ asset('js/form_helpers.js') }}" ></script>
+<script src="{{ asset('js/checkout_helpers.js') }}" ></script>
 
 @include('sweetalert::alert')
 

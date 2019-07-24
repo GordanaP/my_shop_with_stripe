@@ -1,4 +1,23 @@
 /**
+ * Display server side errors.
+ *
+ * @param  array errors
+ * @return none
+ */
+function displayServerSideErrors(errors)
+{
+    for (error in errors)
+    {
+        var formattedError = error.replace(/\./g , "_");
+
+        var invalidField = $("."+formattedError).addClass('is-invalid');
+        var invalidFeedback = '<span class="invalid-feedback">'+errors[error][0]+'</span>';
+
+        invalidField.after(invalidFeedback)
+    }
+}
+
+/**
  * Remove a server side error on new input.
  *
  * @return void
@@ -15,7 +34,29 @@ function clearServerSideErrorOnNewInput()
 }
 
 /**
- * Show the SweetAlert2 confirmation dialog.
+ * Clear server side errors.
+ *
+ * @return void
+ */
+function clearServerSideErrors()
+{
+    $(".is-invalid").removeClass('is-invalid');
+    $(".invalid-feedback").remove();
+}
+
+/**
+ * Clear the form fields.
+ *
+ * @return void
+ */
+function clearFormFields()
+{
+    $('form').trigger('reset');
+}
+
+
+/**
+ * Show the SweetAlert2 confirmation dialogue.
  *
  * @param  string deleteRecordUrl
  * @param  string afterDeleteUrl
