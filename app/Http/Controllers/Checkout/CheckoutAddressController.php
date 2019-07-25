@@ -19,14 +19,6 @@ class CheckoutAddressController extends Controller
     {
         $address = collect(['billing' => collect($request->billing)]);
 
-        Session::put('address', $address);
-
-        $billing = Session::get('address')->get('billing')->toArray();
-
-        Customer::create($billing);
-
-        return response([
-            'message' => 'success'
-        ]);
+        $billing = Session::put('address', $address);
     }
 }

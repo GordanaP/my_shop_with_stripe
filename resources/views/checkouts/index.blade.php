@@ -8,7 +8,8 @@
         <h1>Checkout</h1>
         <hr>
     </header>
-
+{{-- {{ Session::flush() }} --}}
+{{ Session::get('address') }}
     <form id="checkoutForm">
         <div class="row">
             <div class="col-md-6">
@@ -43,6 +44,7 @@
 
         var checkoutButton = document.querySelector('#checkoutButton');
         var checkoutAddressStoreUrl = "{{ route('checkouts.addresses.store') }}";
+        var checkoutStoreUrl = "{{ route('checkouts.store') }}";
 
         var billingAddress = 'billing';
         var addressFields = [
@@ -60,16 +62,25 @@
                 data: {
                     billing : getAddress(billingAddress, addressFields)
                 },
-                success: function(response)
-                {
+                success: function(response) {
                     clearFormFields()
                 },
-                error: function(response)
-                {
+                error: function(response) {
                     var errors = response.responseJSON.errors;
-
                     displayServerSideErrors(errors)
                 }
+            })
+            .then(function() {
+                $.ajax({
+                    url: checkoutStoreUrl,
+                    method: 'POST',
+                    success: function(result)
+                    {
+                        console.log(result.message)
+
+                        redirectTo(result.redirectToUrl)
+                    }
+                });
             });
         });
 

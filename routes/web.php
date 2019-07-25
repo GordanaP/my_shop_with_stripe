@@ -25,13 +25,20 @@ Route::resource('users.customers', 'User\UserCustomerController', [
     'only' => ['create', 'store']
 ]);
 
-Route::post('/test', 'TestController@store')->name('tests.store');
-
+/**
+ * Checkout
+ */
 Route::resource('checkouts', 'Checkout\CheckoutController', [
     'only' => ['index', 'store']
 ]);
 
+/**
+ * CheckoutAddress
+ */
 Route::post('addresses', 'Checkout\CheckoutAddressController')
     ->name('checkouts.addresses.store');
 
-
+/**
+ * Test
+ */
+Route::post('/test', 'TestController@store')->name('tests.store');
