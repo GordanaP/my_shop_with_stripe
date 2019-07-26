@@ -127,3 +127,77 @@ function clearServerSideError(field)
     field.removeClass('is-invalid');
     field.siblings(".invalid-feedback").remove();
 }
+
+/**
+ * Clear hidden server side errors using pure JS.
+ *
+ * @param  JS Element object hiddenField
+ * @return void
+ */
+function clearHiddenServerSideErrorsPureJS(hiddenField) {
+    var invalidFeedbackFields = hiddenField.querySelectorAll('.invalid-feedback');
+    var isInvalidFields = hiddenField.querySelectorAll('.is-invalid');
+    var formFields = hiddenField.querySelectorAll('input');
+
+
+    removeFields(invalidFeedbackFields)
+
+    removeFieldsClass(isInvalidFields)
+
+    removeFieldsValue(formFields)
+}
+
+/**
+ * Clear hidden server side errors using JQuery
+ *
+ * @param  JQ object hiddenField
+ * @return void
+ */
+function clearHiddenServerSideErrorsJQ(hiddenField) {
+   hiddenField.find('.invalid-feedback').remove();
+   hiddenField.find('.is-invalid').removeClass('is-invalid');
+   hiddenField.find('input').val('')
+}
+
+/**
+ * Remove the fields from the DOM.
+ *
+ * @param  array fields
+ * @return void
+ */
+function removeFields(fields)
+{
+    for (i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        field.parentNode.removeChild(field);
+    }
+}
+
+/**
+ * Remove the fields class.
+ *
+ * @param  array fields
+ * @param  string fieldClass
+ * @return void
+ */
+function removeFieldsClass(fields, fieldClass = 'is-invalid')
+{
+    for (i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        field.classList.remove(fieldClass)
+    }
+}
+
+/**
+ * Remove the fields value.
+ *
+ * @param  array fields
+ * @return void
+ */
+function removeFieldsValue(fields)
+{
+    for (i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        field.value = ''
+    }
+}

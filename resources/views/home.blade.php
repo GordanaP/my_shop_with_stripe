@@ -89,7 +89,7 @@
         });
 
         var deleteCustomerButton = $('#deleteCustomerButton');
-        var deleteCustomerUrl = "{{ route('customers.destroy', Auth::user()->customer) }}";
+        var deleteCustomerUrl = "{{ route('customers.destroy', Auth::user()) }}";
         var redirectAfterDeleteCustomer = "{{ route('home') }}";
 
         deleteCustomerButton.on('click', function(){

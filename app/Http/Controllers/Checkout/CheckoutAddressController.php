@@ -15,10 +15,13 @@ class CheckoutAddressController extends Controller
      *
      * @return void
      */
-    public function __invoke(CheckoutAddressRequest $request)
+    public function __invoke(Request $request)
     {
-        $address = collect(['billing' => collect($request->billing)]);
+        $billing = collect(['billing' => collect($request->billing)]);
+        $shipping = collect(['shipping' => collect($request->shipping)]);
 
-        $billing = Session::put('address', $address);
+        $address = $billing->union($shipping);
+
+        Session::put('address', $address);
     }
 }

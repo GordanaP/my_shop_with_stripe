@@ -27,30 +27,30 @@ class CheckoutAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'billing.email' => [
+            '*.email' => [
                 'sometimes', 'required', 'email', 'unique:users,email'
             ],
-            'billing.first_name' => [
-                'required', 'max:50', new AlphaNumHyphenSpace
+            '*.first_name' => [
+                'sometimes', 'required', 'max:50', new AlphaNumHyphenSpace
             ],
-            'billing.last_name' => [
-                'required', 'max:50', new AlphaNumHyphenSpace
+            '*.last_name' => [
+                'sometimes', 'required', 'max:50', new AlphaNumHyphenSpace
             ],
-            'billing.street_address' => [
-                'required', 'max:150', new AlphaNumHyphenSpace
+            '*.street_address' => [
+                'sometimes', 'required', 'max:150', new AlphaNumHyphenSpace
             ],
-            'billing.postal_code' => [
-                'required', 'max:16', new AlphaNumHyphenSpace
+            '*.postal_code' => [
+                'sometimes', 'required', 'max:16', new AlphaNumHyphenSpace
             ],
-            'billing.city' => [
-                'required', 'max:50', new AlphaNumHyphenSpace
+            '*.city' => [
+                'sometimes', 'required', 'max:50', new AlphaNumHyphenSpace
             ],
-            'billing.country' => [
-                'required', Rule::in(Country::codes())
+            '*.country' => [
+                'sometimes', 'required', Rule::in(Country::codes())
             ],
-            'billing.phone' => [
-                'required', 'phone:AUTO',
-            ]
+            '*.phone' => [
+                'sometimes', 'required', 'phone:AUTO',
+            ],
         ];
     }
 }

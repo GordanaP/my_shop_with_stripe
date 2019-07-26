@@ -39,4 +39,5 @@ class Customer extends Model
     {
         return (new static)->fill($data);
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Checkout;
 
+use App\User;
 use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,22 +10,27 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(User $user = null)
     {
-        return view('checkouts.index');
+        return view('checkouts.index')->with([
+            'user' => $user ?? ''
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, User $user = null)
     {
-        $billing = Session::get('address')->get('billing')->toArray();
+        $billing = Session::get('address')->get('billing');
 
-        $customer = Customer::create($billing);
+        if ($billing->isNotEmpty()) {
+            $user ? optional($user)->addCustomer($billing->toArray())
+                  : Customer::create($billing->toArray());
 
-        Session::flush();
+            Session::forget('address');
+        }
 
         return response([
             'message' => 'success',
-            'redirectToUrl' => route('checkouts.index')
+            'redirectToUrl' => route('checkouts.success')
         ]);
     }
 }

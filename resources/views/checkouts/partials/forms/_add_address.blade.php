@@ -1,11 +1,15 @@
-<div class="form-group">
-    <input type="text" id="{{ $address }}_email" placeholder="example@domain.com"
-    class="form-control {{ $address }}_email">
+@guest
+    @if ($address == 'billing')
+        <div class="form-group">
+            <input type="text" id="{{ $address }}_email" placeholder="example@domain.com"
+            class="form-control {{ $address }}_email">
 
-    @error($address.'.email')
-        <span class="invalid-feedback" role="alert"></span>
-    @enderror
-</div>
+            @error($address.'.email')
+                <span class="invalid-feedback" role="alert"></span>
+            @enderror
+        </div>
+    @endif
+@endguest
 
 <div class="form-group">
     <input type="text" id="{{ $address }}_first_name" placeholder="First Name"
@@ -65,7 +69,7 @@
     @enderror
 </div>
 
-<div class="form-group">
+<div class="form-group mb-0">
     <input type="text" id="{{ $address }}_phone" placeholder="Phone Number"
     class="form-control {{ $address }}_phone">
 
