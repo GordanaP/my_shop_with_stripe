@@ -3,10 +3,14 @@
     <div class="card-body text-lg">
         <p class="mb-0">
             <span class="uppercase">{{ $customer->full_name }}</span>
-            <span class="bg-orange-400 text-sm px-2 py-1 rounded-lg text-white ml-2">
-                Default
-            </span>
+
+            @markAsDefault($shipping, $customer)
+                <span class="bg-orange-400 text-sm px-2 py-1 rounded-lg text-white ml-2" style="background: orange">
+                    Default
+                </span>
+            @endmarkAsDefault()
         </p>
+
         @include('customers.partials.html._show_details', [
             'customer' => $customer
         ])
@@ -21,14 +25,16 @@
 
         @include('customers.partials.forms._delete')
 
-        @if (request()->route()->named('users.shippings.index'))
+        @if ( (Auth::user()->customer->is_default && Auth::user()->customer !== $customer) or ! $shipping->is_default)
             <span class="mx-2">|</span>
             <form action="#" method="POST">
+
                 @csrf
+
                 @method('PUT')
 
                 <button type="submit" class="btn btn-link p-0">Set as default</button>
             </form>
+        @endif
     </div>
-    @endif
 </div>

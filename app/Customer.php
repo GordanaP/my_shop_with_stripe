@@ -63,4 +63,9 @@ class Customer extends Model
 
         return $this->shippings()->save($shipping);
     }
+
+    public function getIsDefaultAttribute()
+    {
+        return ! optional($this->shippings->where('default_address', true)->first())->exists();
+    }
 }

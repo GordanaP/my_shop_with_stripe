@@ -19,6 +19,11 @@ class Shipping extends Model
         'country', 'phone'
     ];
 
+    public function getIsDefaultAttribute()
+    {
+        return $this->default_address == true;
+    }
+
     /**
      * Get the customer that owns the shipping.
      *
