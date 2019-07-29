@@ -13,9 +13,10 @@ class CheckoutAddressController extends Controller
     /**
      * Store the checkout adresses into a session.
      *
+     * @param \App\Http\Requests\CheckoutAddressRequest $request
      * @return void
      */
-    public function __invoke(Request $request)
+    public function __invoke(CheckoutAddressRequest $request)
     {
         $billing = collect(['billing' => collect($request->billing)]);
         $shipping = collect(['shipping' => collect($request->shipping)]);

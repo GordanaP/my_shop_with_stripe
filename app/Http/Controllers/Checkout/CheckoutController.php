@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Checkout;
 
 use App\User;
 use App\Customer;
+use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -19,14 +20,21 @@ class CheckoutController extends Controller
 
     public function store(Request $request, User $user = null)
     {
-        $billing = Session::get('address')->get('billing');
+        $billingAddress = Session::get('address')->get('billing');
+        $shippingAddress = Session::get('address')->get('shipping');
 
-        if ($billing->isNotEmpty()) {
-            $user ? optional($user)->addCustomer($billing->toArray())
-                  : Customer::create($billing->toArray());
+        if ($billingAddress->isNotEmpty()) {
 
-            Session::forget('address');
+            $customer = $user ? optional($user)->addCustomer($billingAddress->toArray())
+                  : Customer::create($billingAddress->toArray());
         }
+
+        if ($shippingAddress->isNotEmpty()) {
+
+            $customer->addShipping($shippingAddress->toArray());
+        }
+
+        Session::forget('address');
 
         return response([
             'message' => 'success',

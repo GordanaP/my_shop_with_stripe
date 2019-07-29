@@ -8,12 +8,12 @@
             Edit account
         </div>
 
-        <div class="px-3 pt-3 text-sm font-light">
-                All fields marked with * are required.
+        <div class="p-3 text-sm font-light">
+            All fields marked with * are required.
         </div>
 
         <div class="card-body mx-auto w-3/4">
-            @include('users.forms._edit')
+            @include('users.partials.forms._edit')
         </div>
     </div>
 @endsection

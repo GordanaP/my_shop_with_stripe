@@ -55,7 +55,7 @@ class CustomerPolicy
     public function update(User $user, Customer $customer)
     {
         // return $user->id == $customer->user_id;
-        return $user->isModelOwner($customer);
+        return $user->owns($customer);
     }
 
     /**
@@ -67,8 +67,7 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer)
     {
-        // return $user->id == $customer->user_id;
-        return $user->isModelOwner($customer);
+        return $user->owns($customer);
     }
 
     /**

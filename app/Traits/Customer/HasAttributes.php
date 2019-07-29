@@ -15,6 +15,16 @@ trait HasAttributes
     }
 
     /**
+     * Get the customers's city along with the postal code.
+     *
+     * @return string
+     */
+    public function getZipAndCityAttribute()
+    {
+        return $this->postal_code . ' ' .$this->city;
+    }
+
+    /**
      * Set the customers's first name.
      *
      * @param  string  $value

@@ -91,7 +91,7 @@ class CustomerController extends Controller
 
         Alert::success('Success!', 'Your profile has been updated.');
 
-        return back();
+        return redirect()->route('home');
     }
 
     /**

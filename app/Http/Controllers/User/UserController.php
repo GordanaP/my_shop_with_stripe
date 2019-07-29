@@ -89,7 +89,7 @@ class UserController extends Controller
 
         Alert::success('Success!', 'Your account has been updated');
 
-        return back();
+        return redirect()->route('home');
     }
 
     /**

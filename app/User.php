@@ -62,6 +62,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all of the shipping addresses for the user.
+     */
+    public function shippings()
+    {
+        return $this->hasManyThrough('App\Shipping', 'App\Customer');
+    }
+
+    /**
      * Set the user's email.
      *
      * @param  string  $value
@@ -107,7 +115,7 @@ class User extends Authenticatable
     {
         $customer = Customer::fromForm($data);
 
-        $this->customer()->save($customer);
+        return $this->customer()->save($customer);
     }
 
     /**
@@ -126,7 +134,7 @@ class User extends Authenticatable
      * @param  \App\Model $model
      * @return boolean
      */
-    public function isModelOwner($model)
+    public function owns($model)
     {
         return $this->id == $model->user_id;
     }
@@ -140,5 +148,46 @@ class User extends Authenticatable
     public function isRequestedUser($user)
     {
         return $this->id == $user->id;
+    }
+
+    /**
+     * Get the user's default shipping address.
+     *
+     * @return \App\Shipping
+     */
+    public function getDefaultShipping()
+    {
+        return $this->shippings->where('default_address', true )->first();
+    }
+
+    /**
+     * Get a default shipping address.
+     *
+     * @return mixed
+     */
+    public function defaultShipping()
+    {
+        return $this->getDefaultShipping() ?: $this->customer;
+    }
+
+    public function getAddressBook()
+    {
+        $shippings = $this->shippings;
+
+        return $shippings->prepend($this->customer);
+    }
+
+    /**
+     * Get non default shipping addresses.
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function getNonDefaultShippings()
+    {
+        $nonDefaultShippings = $this->shippings->where('default_address', false);
+
+        return $this->getDefaultShipping()
+            ? $nonDefaultShippings->prepend($this->customer)
+            : $nonDefaultShippings;
     }
 }

@@ -26,5 +26,8 @@ class BladeServiceProvider extends ServiceProvider
     {
         Blade::component('components.validation_info', 'info');
         Blade::component('components.settings_option', 'settings');
+        Blade::if('registered', function () {
+            return \Auth::check() && \Auth::user()->hasProfile();
+        });
     }
 }

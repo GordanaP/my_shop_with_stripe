@@ -17,7 +17,7 @@
 
         <div class="col-sm-9">
             <input type="text" name="first_name" id="first_name"
-            placeholder="Enter your first name"
+            placeholder="Enter first name"
             value="{{ $first_name }}"
             class="form-control @error('first_name') is-invalid @enderror" />
 
@@ -42,7 +42,7 @@
         </label>
         <div class="col-sm-9">
             <input type="text" name="last_name" id="last_name"
-            placeholder="Enter your last name"
+            placeholder="Enter last name"
             value="{{ $last_name }}"
             class="form-control @error('last_name') is-invalid @enderror" />
 
@@ -67,7 +67,7 @@
         </label>
         <div class="col-sm-9">
             <input type="text" name="street_address" id="street_address"
-            placeholder="Enter your street address"
+            placeholder="Enter street address"
             value="{{ $street_address }}"
             class="form-control @error('street_address') is-invalid @enderror" />
 
@@ -92,7 +92,7 @@
         </label>
         <div class="col-sm-9">
             <input type="text" name="postal_code" id="postal_code"
-            placeholder="Enter your postal code"
+            placeholder="Enter postal code"
             value="{{ $postal_code }}"
             class="form-control @error('postal_code') is-invalid @enderror" />
 
@@ -117,7 +117,7 @@
         </label>
         <div class="col-sm-9">
             <input type="text" name="city" id="city"
-            placeholder="Enter your city"
+            placeholder="Enter city"
             value="{{ $city }}"
             class="form-control @error('city') is-invalid @enderror" />
 
@@ -176,7 +176,7 @@
         </label>
         <div class="col-sm-9">
             <input type="text" name="phone" id="phone"
-            placeholder="Enter your phone number"
+            placeholder="Enter phone number"
             value="{{ $phone }}"
             class="form-control @error('phone') is-invalid @enderror" />
 

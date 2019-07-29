@@ -43,13 +43,26 @@
                     </div>
                 </div>
 
-                <div id="shippingAddress" class="w-4/5 hidden mt-3">
-                    <p class="font-medium">Shipping Address</p>
+                <div id="shippingAddress" class="w-4/5 {{ optional($user)->hasProfile() ? '' : 'hidden'  }} mt-3">
+                    <p class="font-medium">
+                        Shipping Address
+                        @if (optional($user)->hasProfile())
+                            <a href="{{ route('customers.edit', $user->customer) }}" class="ml-1">
+                                Change
+                            </a>
+                        @endif
+                    </p>
 
                     <div class="card card-body">
-                        @include('checkouts.partials.forms._add_address', [
-                            'address' => 'shipping'
-                        ])
+                        @if (optional($user)->hasProfile())
+                            @include('customers.html._profile_details', [
+                                'customer' => $user->customer
+                            ])
+                        @else
+                            @include('checkouts.partials.forms._add_address', [
+                                'address' => 'shipping'
+                            ])
+                        @endif
                     </div>
                 </div>
             </div><!-- /.col-md-6 -->
@@ -76,24 +89,24 @@
         var registeredCustomer = @json(optional($user)->hasProfile())
 
         var checkoutButton = document.querySelector('#checkoutButton');
-        var hiddenField = document.querySelector('#shippingAddress');
-        var toggleHiddenFieldCheckbox = document.querySelector('#toggleShippingAddress');
 
         var checkoutAddressStoreUrl = "{{ route('checkouts.addresses.store') }}";
         var usersCheckoutStoreUrl = "{{ route('users.checkouts.store', $user ?? '') }}";
 
-        var billingAddress = 'billing';
-        var shippingAddress = 'shipping';
+        var hiddenAddress = document.querySelector('#shippingAddress');
+        var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
+        var billing = 'billing';
+        var shipping = 'shipping';
         var addressFields = [
             'first_name', 'last_name', 'street_address', 'postal_code', 'city',
             'country', 'phone', 'email'
         ];
 
-        if(toggleHiddenFieldCheckbox)
+        if(toggleHiddenAddressCheckbox)
         {
-            toggleHiddenFieldCheckbox.addEventListener('change', function(event) {
+            toggleHiddenAddressCheckbox.addEventListener('change', function(event) {
                 if ( ! event.target.checked) {
-                    clearHiddenServerSideErrorsPureJS(hiddenField)
+                    clearHiddenServerSideErrorsPureJS(hiddenAddress)
                 }
             });
         }
@@ -106,7 +119,7 @@
                 url: checkoutAddressStoreUrl,
                 method: "POST",
                 data: registeredCustomer ? ''
-                        : getCheckedAddress(toggleHiddenFieldCheckbox, billingAddress, shippingAddress, addressFields),
+                        : getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),
                 success: function(response) {
                     console.log(response)
                     clearFormFields()
@@ -116,18 +129,18 @@
                     displayServerSideErrors(errors)
                 }
             })
-            // .then(function() {
-            //     $.ajax({
-            //         url: usersCheckoutStoreUrl,
-            //         method: 'POST',
-            //         success: function(result)
-            //         {
-            //             console.log(result.message)
+            .then(function() {
+                $.ajax({
+                    url: usersCheckoutStoreUrl,
+                    method: 'POST',
+                    success: function(result)
+                    {
+                        console.log(result.message)
 
-            //             redirectTo(result.redirectToUrl)
-            //         }
-            //     });
-            // });
+                        redirectTo(result.redirectToUrl)
+                    }
+                });
+            });
         });
 
     </script>
