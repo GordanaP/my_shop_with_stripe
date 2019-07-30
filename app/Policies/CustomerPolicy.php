@@ -42,7 +42,7 @@ class CustomerPolicy
      */
     public function create(User $user)
     {
-        return ! $user->hasProfile();
+        return ! $user->load('customer')->hasProfile();
     }
 
     /**
@@ -54,7 +54,6 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer)
     {
-        // return $user->id == $customer->user_id;
         return $user->owns($customer);
     }
 

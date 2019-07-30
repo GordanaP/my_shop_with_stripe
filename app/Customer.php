@@ -21,6 +21,16 @@ class Customer extends Model
     ];
 
     /**
+     * Get the user's attribute.
+     *
+     * @return boolean
+     */
+    public function getIsDefaultAttribute()
+    {
+        return $this->shippings->where('default_address', true)->isEmpty();
+    }
+
+    /**
      * Get the user that owns the customer.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -62,10 +72,5 @@ class Customer extends Model
         $shipping = Shipping::fromForm($data);
 
         return $this->shippings()->save($shipping);
-    }
-
-    public function getIsDefaultAttribute()
-    {
-        return ! optional($this->shippings->where('default_address', true)->first())->exists();
     }
 }

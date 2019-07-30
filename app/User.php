@@ -13,7 +13,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -22,8 +21,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
-    protected $with = ['customer.shippings'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -61,7 +58,7 @@ class User extends Authenticatable
      */
     public function customer()
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasOne(RegisteredCustomer::class);
     }
 
     /**
@@ -69,7 +66,7 @@ class User extends Authenticatable
      */
     public function shippings()
     {
-        return $this->hasManyThrough('App\Shipping', 'App\Customer');
+        return $this->hasManyThrough('App\Shipping', 'App\RegisteredCustomer');
     }
 
     /**
@@ -154,43 +151,26 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's default shipping address.
-     *
-     * @return \App\Shipping
-     */
-    public function getDefaultShipping()
-    {
-        return $this->shippings->where('default_address', true )->first();
-    }
-
-    /**
-     * Get a default shipping address.
-     *
-     * @return mixed
-     */
-    public function defaultShipping()
-    {
-        return $this->getDefaultShipping() ?: $this->customer;
-    }
-
-    public function getAddressBook()
-    {
-        $shippings = $this->shippings;
-
-        return $shippings->prepend($this->customer);
-    }
-
-    /**
-     * Get non default shipping addresses.
+     * Get all the addresses for the user.
      *
      * @return Illuminate\Support\Collection
      */
-    public function getNonDefaultShippings()
+    public function getAddressBook()
     {
-        $nonDefaultShippings = $this->shippings->where('default_address', false);
+        return $this->shippings
+            ->push($this->customer)
+            ->sortBy('default_address')
+            ->reverse();
+    }
 
-        return $this->getDefaultShipping()
-            ? $nonDefaultShippings->prepend($this->customer)
-            : $nonDefaultShippings;
+    /**
+     * Determine if the address is not the billing address.
+     *
+     * @param  \App\Customer or \App\Shipping  $address
+     * @return boolean
+     */
+    public function isNotBillingAddress($address)
+    {
+        return $this->customer !== $address;
     }
 }

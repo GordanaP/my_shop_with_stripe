@@ -4,6 +4,8 @@
     </div>
 
     <div class="card-body text-lg">
+        <p class="uppercase font-bold mb-0">{{ Auth::user()->customer->full_name }}</p>
+
         @include('customers.partials.html._show_details', [
             'customer' => Auth::user()->customer,
             'font_weight' => 'font-bold'

@@ -16,8 +16,8 @@ class CreateShippingsTable extends Migration
         Schema::create('shippings', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('customer_id')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')
+            $table->unsignedBigInteger('registered_customer_id')->nullable();
+            $table->foreign('registered_customer_id')->references('id')->on('customers')
                 ->onDelete('set null');
 
             $table->string('first_name');

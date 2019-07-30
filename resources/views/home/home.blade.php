@@ -3,32 +3,29 @@
 @section('title', 'Homepage')
 
 @section('content')
-    <header>
-        <h2 class="mb-0">
-            Hi, {{ optional(Auth::user()->customer)->full_name ?: Auth::user()->name }}
-        </h2>
-        <hr>
-    </header>
+    <h2 class="mb-0">
+        Hi, {{ optional(Auth::user()->customer)->full_name ?: Auth::user()->name }}
+    </h2>
 
-    <main>
-        <div class="row">
-            <div class="col-md-4">
-                @include('home.partials._show_account')
-            </div>
+    <hr>
 
-            <div class="col-md-4">
-                @registered
-                    @include('home.partials._show_profile')
-                @else
-                    @include('home.partials._add_profile')
-                @endregistered
-            </div>
-
-            <div class="col-md-4">
-                @include('home.partials._view_address_book')
-            </div>
+    <div class="row">
+        <div class="col-md-4">
+            @include('home.partials._show_account')
         </div>
-    </main>
+
+        <div class="col-md-4">
+            @withProfile(Auth::user())
+                @include('home.partials._show_profile')
+            @else
+                @include('home.partials._add_profile')
+            @endwithProfile
+        </div>
+
+        <div class="col-md-4">
+            @include('home.partials._view_address_book')
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -42,7 +39,7 @@
             swalConfirmDelete(deleteAccountUrl, redirectAfterDeleteAccount);
         });
 
-        @registered
+        @withProfile(Auth::user())
             var deleteProfileButton = $('#deleteProfileButton');
             var deleteProfileUrl = "{{ route('customers.destroy', Auth::user()->customer) }}";
             var redirectAfterDeleteProfile = "{{ route('home') }}";
@@ -50,7 +47,7 @@
             deleteProfileButton.on('click', function(){
                 swalConfirmDelete(deleteProfileUrl, redirectAfterDeleteProfile);
             });
-        @endregistered
+        @endwithProfile
 
     </script>
 @endsection
