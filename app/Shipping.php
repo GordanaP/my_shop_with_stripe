@@ -44,6 +44,8 @@ class Shipping extends Model
     {
         $data = (new static)->fill($data);
 
+        request()->has('default_address') ? $data['default_address'] = 1 : '';
+
         return $data;
     }
 

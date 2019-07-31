@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Customer;
+use App\Shipping;
 use App\Services\Validated;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
@@ -193,7 +194,7 @@ class User extends Authenticatable
      */
     public function setNewDefaultAddress($address = null)
     {
-        $this->removeDefaultAddress();
+        $this->removeOldDefaultAddress();
 
         optional($address)->setAsDefault();
     }
@@ -203,7 +204,7 @@ class User extends Authenticatable
      *
      * @return void
      */
-    public function removeDefaultAddress()
+    public function removeOldDefaultAddress()
     {
         if($this->findDefaultAddress()->isNotEmpty())
         {

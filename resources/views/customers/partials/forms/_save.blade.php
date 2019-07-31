@@ -192,6 +192,22 @@
         </div>
     </div>
 
+    <!-- Set as default -->
+    @if ($user->hasProfile())
+        <div class="form-group row">
+            <div class="col-md-9 offset-md-3">
+                <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"
+                name="default_address" id="default_address" value="1"
+                {{ getChecked(old('default_address') , 1) }}>
+                <label class="form-check-label font-normal" for="default_address" value="1">
+                    Set as default
+                </label>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="form-group pull-right">
         <button type="submit" class="btn btn-primary">
             {{ $button_name }}

@@ -1,15 +1,14 @@
 <div class="card" style="height: 350px">
     <div class="card-body text-lg">
-        <p class="mb-0">
-            <span class="uppercase">{{ $address->full_name }}</span>
+        <p>
             @if ($user->isBillingAddress($address))
-                <span class="bg-indigo-600 text-sm px-3 py-1 rounded-lg text-white ml-2">
+                <span class="bg-indigo-600 text-sm px-3 py-1 rounded-lg text-white mr-2">
                     Billing
                 </span>
             @endif
 
             @if ($address->is_default)
-                <span class="bg-orange-400 text-sm px-3 py-1 rounded-lg text-white ml-2">
+                <span class="bg-orange-400 text-sm px-3 py-1 rounded-lg text-white">
                     Default
                 </span>
             @endif

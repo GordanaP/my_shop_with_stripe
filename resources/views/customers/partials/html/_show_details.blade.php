@@ -1,3 +1,5 @@
+<p class="mb-0 uppercase">{{ $customer->full_name }}</p>
+
 <p class="mb-0">{{ $customer->street_address }}</p>
 
 <p class="mb-0">{{ $customer->zip_and_city }}</p>

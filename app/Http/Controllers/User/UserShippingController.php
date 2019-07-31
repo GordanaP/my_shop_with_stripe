@@ -53,7 +53,7 @@ class UserShippingController extends Controller
      */
     public function store(CustomerRequest $request, User $user)
     {
-        $shipping = $user->customer->addShipping($request->validated());
+        $user->customer->addShipping($request->all());
 
         return redirect()->route('users.shippings.index', compact('user'));
     }

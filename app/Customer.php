@@ -69,8 +69,10 @@ class Customer extends Model
      */
     public function addShipping(array $data)
     {
+        request()->has('default_address') ? $this->user->removeOldDefaultAddress() : '';
+
         $shipping = Shipping::fromForm($data);
 
-        return $this->shippings()->save($shipping);
+        $this->shippings()->save($shipping);
     }
 }
