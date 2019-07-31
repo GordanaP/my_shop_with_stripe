@@ -84,6 +84,10 @@ class ShippingController extends Controller
      */
     public function destroy(Shipping $shipping)
     {
-        //
+        $shipping->delete();
+
+        return response([
+            'message' => 'The address has been deleted!'
+        ]);
     }
 }

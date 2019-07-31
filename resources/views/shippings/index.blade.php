@@ -32,3 +32,20 @@
         <p>Your address book is empty at present.</p>
     @endwithProfile
 @endsection
+
+@section('scripts')
+    <script>
+
+        var deleteShippingButton = $('#deleteShippingButton');
+        var redirectAfterDeleteShipping = "{{ route('users.shippings.index', $user) }}";
+
+        deleteShippingButton.on('click', function() {
+
+            var shippingId = $(this).val();
+            var deleteShippingUrl = '/shippings/'+shippingId;
+
+            swalConfirmDelete(deleteShippingUrl, redirectAfterDeleteShipping);
+        });
+
+    </script>
+@endsection
