@@ -186,16 +186,16 @@ class User extends Authenticatable
     }
 
     /**
-     * Change the default address.
+     * Set a new default address.
      *
-     * @param  \App\Shipping $newAddress
+     * @param \App\Shipping $address null
      * @return void
      */
-    public function changeDefaultAddress($newAddress)
+    public function setNewDefaultAddress($address = null)
     {
-       $this->removeDefaultAddress();
+        $this->removeDefaultAddress();
 
-       $newAddress->setAsDefault();
+        optional($address)->setAsDefault();
     }
 
     /**
@@ -219,7 +219,6 @@ class User extends Authenticatable
      */
     public function findDefaultAddress()
     {
-        // return $this->shippings->where('default_address', 1);
         return $this->getAddressBook()->where('default_address', 1);
     }
 }

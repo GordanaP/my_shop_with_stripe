@@ -42,7 +42,9 @@ class Shipping extends Model
      */
     public static function fromForm(array $data)
     {
-        return (new static)->fill($data);
+        $data = (new static)->fill($data);
+
+        return $data;
     }
 
     /**

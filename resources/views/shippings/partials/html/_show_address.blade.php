@@ -34,7 +34,7 @@
         @endif
 
         @if (! $address->is_default)
-            <form action="{{ route('users.shippings.update', [$user, $address]) }}" method="POST">
+            <form action="{{ route('users.shippings.update', $user->isBillingAddress($address) ? $user : [$user, $address]) }}" method="POST">
 
                 @csrf
 

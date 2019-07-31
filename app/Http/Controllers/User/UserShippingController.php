@@ -53,11 +53,9 @@ class UserShippingController extends Controller
      */
     public function store(CustomerRequest $request, User $user)
     {
-        $user->customer->addShipping($request->validated());
+        $shipping = $user->customer->addShipping($request->validated());
 
-        Alert::success('Success!', 'The address has been added to the address book.');
-
-        return redirect()->route('users.shippings.index', Auth::user());
+        return redirect()->route('users.shippings.index', compact('user'));
     }
 
     /**
@@ -67,9 +65,9 @@ class UserShippingController extends Controller
      * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, Shipping $shipping)
+    public function update(Request $request, User $user, Shipping $shipping = null)
     {
-        $user->changeDefaultAddress($shipping);
+        $user->setNewDefaultAddress($shipping);
 
         Alert::success('Success!', 'The default address is changed.');
 

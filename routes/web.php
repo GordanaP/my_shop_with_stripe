@@ -33,9 +33,13 @@ Route::resource('shippings', 'Shipping\ShippingController');
 /**
  * UserShipping
  */
+Route::patch('users/{user}/shippings/{shipping?}', 'User\UserShippingController@update')
+->name('users.shippings.update');
+
 Route::resource('users.shippings', 'User\UserShippingController', [
-    'only' => ['index', 'create', 'store', 'update']
+    'only' => ['index', 'create', 'store']
 ]);
+
 
 /**
  * UserCheckout
