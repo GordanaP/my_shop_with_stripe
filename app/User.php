@@ -64,6 +64,8 @@ class User extends Authenticatable
 
     /**
      * Get all of the shipping addresses for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function shippings()
     {

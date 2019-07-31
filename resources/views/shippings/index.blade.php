@@ -31,5 +31,4 @@
     @else
         <p>Your address book is empty at present.</p>
     @endwithProfile
-
 @endsection

@@ -6,9 +6,7 @@ use App\User;
 use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserShippingController extends Controller
 {
@@ -53,7 +51,7 @@ class UserShippingController extends Controller
      */
     public function store(CustomerRequest $request, User $user)
     {
-        $user->customer->addShipping($request->all());
+        $user->customer->addShipping($request->validated());
 
         return redirect()->route('users.shippings.index', compact('user'));
     }
@@ -65,11 +63,9 @@ class UserShippingController extends Controller
      * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, Shipping $shipping = null)
+    public function update(User $user, Shipping $shipping = null)
     {
         $user->setNewDefaultAddress($shipping);
-
-        Alert::success('Success!', 'The default address is changed.');
 
         return back();
     }

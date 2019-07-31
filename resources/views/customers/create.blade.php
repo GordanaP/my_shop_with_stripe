@@ -14,7 +14,7 @@
 
         <div class="card-body mx-auto w-3/4">
             @include('customers.partials.forms._save', [
-                'route' => route('users.customers.store', Auth::user()),
+                'route' => route('users.customers.store', $user),
                 'first_name' => old('first_name'),
                 'last_name' => old('last_name'),
                 'street_address' => old('street_address'),

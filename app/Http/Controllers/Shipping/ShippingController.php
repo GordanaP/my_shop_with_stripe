@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shipping;
 use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 
 class ShippingController extends Controller
 {
@@ -58,19 +59,21 @@ class ShippingController extends Controller
      */
     public function edit(Shipping $shipping)
     {
-        return $shipping;
+        return view('shippings.edit', compact('shipping'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CustomerRequest  $request
      * @param  \App\Shipping  $shipping
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shipping $shipping)
+    public function update(CustomerRequest $request, Shipping $shipping)
     {
-        //
+        $shipping->updateData($request->validated());
+
+        return redirect()->route('users.shippings.index', $shipping->registered_customer->user);
     }
 
     /**

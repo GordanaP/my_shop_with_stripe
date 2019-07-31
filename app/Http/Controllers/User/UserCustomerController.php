@@ -5,9 +5,7 @@ namespace App\Http\Controllers\User;
 use App\User;
 use App\Customer;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserCustomerController extends Controller
 {
@@ -46,8 +44,6 @@ class UserCustomerController extends Controller
         $this->authorize('create', Customer::class);
 
         $user->addCustomer($request->validated());
-
-        Alert::success('Success!', 'Your profile has been created.');
 
         return redirect()->route('home');
     }

@@ -19,6 +19,11 @@ class Shipping extends Model
         'country', 'phone'
     ];
 
+    /**
+     * Deteremine if the addresd is default.
+     *
+     * @return boolean
+     */
     public function getIsDefaultAttribute()
     {
         return $this->default_address == true;
@@ -29,9 +34,9 @@ class Shipping extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function customer()
+    public function registered_customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(RegisteredCustomer::class);
     }
 
     /**
@@ -50,6 +55,19 @@ class Shipping extends Model
     }
 
     /**
+     * Update the address.
+     *
+     * @param  array $data
+     * @return void
+     */
+    public function updateData(array $data)
+    {
+        $this->update($data);
+
+        $this->manageDefaultAddress();
+    }
+
+    /**
      * Set the address as default.
      *
      * @return void
@@ -62,7 +80,7 @@ class Shipping extends Model
     }
 
     /**
-     * Set the address as non default
+     * Set the address as non default.
      *
      * @return void
      */
@@ -71,5 +89,20 @@ class Shipping extends Model
         $this->default_address = false;
 
         $this->save();
+    }
+
+    /**
+     * Manage the default address.
+     *
+     * @return void
+     */
+    private function manageDefaultAddress()
+    {
+        if(request()->has('default_address') && ! $this->is_default) {
+            $this->registered_customer->user->setNewDefaultAddress($this);
+        }
+        else if(! request()->has('default_address') && $this->is_default) {
+            $this->setAsNondefault();
+        }
     }
 }

@@ -47,6 +47,9 @@ class CustomerRequest extends FormRequest
             ],
             'phone' => [
                 'required', 'phone:AUTO',
+            ],
+            'default_address' => [
+                'filled', 'boolean'
             ]
         ];
     }

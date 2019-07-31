@@ -4,7 +4,11 @@
     @method('PUT')
 
     <div class="form-group row">
-        <label for="name" class="col-sm-3 col-form-label">Name:<span class="text-red-500 text-lg">*</span></label>
+        <label for="name" class="col-sm-3 col-form-label">
+            <div class="pull-right">
+                <span class="text-red-500 text-lg">*</span> Name:
+            </div>
+        </label>
         <div class="col-sm-9">
             <input type="text" name="name" id="name"
             placeholder="Enter your name"
@@ -24,7 +28,11 @@
     </div>
 
     <div class="form-group row">
-        <label for="email" class="col-sm-3 col-form-label">E-mail address: <span class="text-red-500 text-lg">*</span></label>
+        <label for="email" class="col-sm-3 col-form-label">
+            <div class="pull-right">
+                <span class="text-red-500 text-lg">*</span> E-mail address:
+            </div>
+        </label>
         <div class="col-sm-9">
             <input type="text" name="email" id="email"
             placeholder="email@example.com"
@@ -44,7 +52,9 @@
     </div>
 
     <div class="form-group row">
-        <label for="password" class="col-sm-3 col-form-label">Password:</label>
+        <label for="password" class="col-sm-3 col-form-label">
+            <span class="pull-right">Password:</span>
+        </label>
         <div class="col-sm-9">
             <input type="password" name="password" id="password"
             value="{{ old('password') }}"
@@ -64,7 +74,9 @@
     </div>
 
     <div class="form-group row">
-        <label for="password-confirm" class="col-sm-3 col-form-label">Confirm Password:</label>
+        <label for="password-confirm" class="col-sm-3 col-form-label">
+            <span class="pull-right">Confirm Password:</span>
+        </label>
         <div class="col-sm-9">
             <input type="password" class="form-control"
             id="password-confirm" name="password_confirmation"

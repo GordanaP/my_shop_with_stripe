@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Hash;
+
 class Validated
 {
     public static function getUser(array $data)

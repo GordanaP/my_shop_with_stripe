@@ -25,7 +25,7 @@
 
             <span class="mx-2">|</span>
 
-            @include('customers.partials.forms._delete')
+            @include('shippings.partials.forms._delete')
         @endif
 
         @if (! $address->is_default && $user->isNotBillingAddress($address))
@@ -33,15 +33,7 @@
         @endif
 
         @if (! $address->is_default)
-            <form action="{{ route('users.shippings.update', $user->isBillingAddress($address) ? $user : [$user, $address]) }}" method="POST">
-
-                @csrf
-
-                @method('PATCH')
-
-                <button type="submit" class="btn btn-link p-0">Set as default</button>
-            </form>
+            @include('shippings.partials.forms._set_as_default')
         @endif
     </div>
-
 </div>

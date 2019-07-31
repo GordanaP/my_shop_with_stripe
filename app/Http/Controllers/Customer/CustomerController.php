@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class CustomerController extends Controller
 {
@@ -88,8 +86,6 @@ class CustomerController extends Controller
         $this->authorize('update', $customer);
 
         $customer->update($request->validated());
-
-        Alert::success('Success!', 'Your profile has been updated.');
 
         return redirect()->route('home');
     }

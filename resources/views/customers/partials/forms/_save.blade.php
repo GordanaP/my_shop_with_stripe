@@ -2,7 +2,7 @@
 
     @csrf
 
-    @if (Route::currentRouteName() == 'customers.edit')
+    @if (request()->route()->named('customers.edit') || request()->route()->named('shippings.edit'))
         @method('PUT')
     @endif
 
@@ -193,17 +193,23 @@
     </div>
 
     <!-- Set as default -->
-    @if ($user->hasProfile())
+    @if (request()->route()->named('users.shippings.create') || request()->route()->named('shippings.edit'))
         <div class="form-group row">
             <div class="col-md-9 offset-md-3">
                 <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox"
-                name="default_address" id="default_address" value="1"
-                {{ getChecked(old('default_address') , 1) }}>
-                <label class="form-check-label font-normal" for="default_address" value="1">
-                    Set as default
-                </label>
+                    <input class="form-check-input @error('default_address') is-invalid @enderror" type="checkbox"
+                    name="default_address" id="default_address" value="1"
+                    {{ getChecked($default_address, 1) }}>
+                    <label class="form-check-label font-normal" for="default_address" value="1">
+                        Set as default
+                    </label>
                 </div>
+
+                @error('default_address')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
     @endif

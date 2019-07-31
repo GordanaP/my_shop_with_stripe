@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -86,8 +85,6 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         $user->updateAccount($request->validated());
-
-        Alert::success('Success!', 'Your account has been updated');
 
         return redirect()->route('home');
     }
