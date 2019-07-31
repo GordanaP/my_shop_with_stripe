@@ -1,6 +1,6 @@
 <div class="card" style="height: 350px">
     <div class="text-lg p-3 border-b">
-        <i class="fa fa-user-circle fa-lg text-gray-600 mr-1"></i> My Profile
+        <i class="fa fa-user-circle-o fa-lg  text-gray-600 mr-1"></i> My Profile
     </div>
 
     <div class="card-body text-lg">

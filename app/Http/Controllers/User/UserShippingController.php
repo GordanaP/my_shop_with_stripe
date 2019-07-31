@@ -25,6 +25,7 @@ class UserShippingController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function index(User $user)
@@ -35,6 +36,7 @@ class UserShippingController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function create(User $user)
@@ -46,6 +48,7 @@ class UserShippingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\CustomerRequest  $request
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function store(CustomerRequest $request, User $user)
@@ -55,5 +58,21 @@ class UserShippingController extends Controller
         Alert::success('Success!', 'The address has been added to the address book.');
 
         return redirect()->route('users.shippings.index', Auth::user());
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\CustomerRequest  $request
+     * @param \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user, Shipping $shipping)
+    {
+        $user->changeDefaultAddress($shipping);
+
+        Alert::success('Success!', 'The default address is changed.');
+
+        return back();
     }
 }

@@ -44,4 +44,28 @@ class Shipping extends Model
     {
         return (new static)->fill($data);
     }
+
+    /**
+     * Set the address as default.
+     *
+     * @return void
+     */
+    public function setAsDefault()
+    {
+        $this->default_address = true;
+
+        $this->save();
+    }
+
+    /**
+     * Set the address as non default
+     *
+     * @return void
+     */
+    public function setAsNonDefault()
+    {
+        $this->default_address = false;
+
+        $this->save();
+    }
 }

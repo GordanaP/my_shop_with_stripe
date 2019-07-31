@@ -34,7 +34,7 @@ Route::resource('shippings', 'Shipping\ShippingController');
  * UserShipping
  */
 Route::resource('users.shippings', 'User\UserShippingController', [
-    'only' => ['index', 'create', 'store']
+    'only' => ['index', 'create', 'store', 'update']
 ]);
 
 /**

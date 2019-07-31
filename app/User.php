@@ -158,9 +158,9 @@ class User extends Authenticatable
     public function getAddressBook()
     {
         return $this->shippings
-            ->push($this->customer)
             ->sortBy('default_address')
-            ->reverse();
+            ->reverse()
+            ->prepend($this->customer);
     }
 
     /**
@@ -172,5 +172,54 @@ class User extends Authenticatable
     public function isNotBillingAddress($address)
     {
         return $this->customer !== $address;
+    }
+
+    /**
+     * Determine if the address is the billing address.
+     *
+     * @param  mixed  $address
+     * @return boolean
+     */
+    public function isBillingAddress($address)
+    {
+        return $this->customer == $address;
+    }
+
+    /**
+     * Change the default address.
+     *
+     * @param  \App\Shipping $newAddress
+     * @return void
+     */
+    public function changeDefaultAddress($newAddress)
+    {
+       $this->removeDefaultAddress();
+
+       $newAddress->setAsDefault();
+    }
+
+    /**
+     * Remove the user's default address.
+     *
+     * @return void
+     */
+    public function removeDefaultAddress()
+    {
+        if($this->findDefaultAddress()->isNotEmpty())
+        {
+            $this->findDefaultAddress()->first()
+                ->setAsNonDefault();
+        }
+    }
+
+    /**
+     * Find the deafult address.
+     *
+     * @return \App\Shipping
+     */
+    public function findDefaultAddress()
+    {
+        // return $this->shippings->where('default_address', 1);
+        return $this->getAddressBook()->where('default_address', 1);
     }
 }
