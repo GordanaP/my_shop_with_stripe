@@ -78,6 +78,6 @@ class Customer extends Model
 
     public function owns($model)
     {
-        return $this->id == $model->registered_customer_id;
+        return $this->id == $model->customer_id;
     }
 }

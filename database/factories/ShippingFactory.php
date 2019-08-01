@@ -3,7 +3,7 @@
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
 use App\Shipping;
-use App\RegisteredCustomer;
+use App\Customer;
 use Faker\Generator as Faker;
 
 $factory->define(Shipping::class, function (Faker $faker) {
@@ -15,6 +15,6 @@ $factory->define(Shipping::class, function (Faker $faker) {
         'city' => $faker->city,
         'country' => 'rs',
         'phone' => $faker->phoneNumber,
-        'registered_customer_id' => RegisteredCustomer::inRandomOrder()->first()->id,
+        'customer_id' => Customer::inRandomOrder()->first()->id,
     ];
 });

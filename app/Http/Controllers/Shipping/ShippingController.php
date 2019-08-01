@@ -87,7 +87,7 @@ class ShippingController extends Controller
 
         $shipping->updateData($request->validated());
 
-        return redirect()->route('users.shippings.index', $shipping->registered_customer->user);
+        return redirect()->route('users.shippings.index', $shipping->customer->user);
     }
 
     /**

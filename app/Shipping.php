@@ -34,9 +34,9 @@ class Shipping extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function registered_customer()
+    public function customer()
     {
-        return $this->belongsTo(RegisteredCustomer::class);
+        return $this->belongsTo(Customer::class);
     }
 
     /**
@@ -99,7 +99,7 @@ class Shipping extends Model
     private function manageDefaultAddress()
     {
         if(request()->has('default_address') && ! $this->is_default) {
-            $this->registered_customer->user->setNewDefaultAddress($this);
+            $this->customer->user->setNewDefaultAddress($this);
         }
         else if(! request()->has('default_address') && $this->is_default) {
             $this->setAsNondefault();

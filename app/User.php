@@ -59,7 +59,7 @@ class User extends Authenticatable
      */
     public function customer()
     {
-        return $this->hasOne(RegisteredCustomer::class);
+        return $this->hasOne(Customer::class);
     }
 
     /**
@@ -69,7 +69,7 @@ class User extends Authenticatable
      */
     public function shippings()
     {
-        return $this->hasManyThrough('App\Shipping', 'App\RegisteredCustomer');
+        return $this->hasManyThrough('App\Shipping', 'App\Customer');
     }
 
     /**

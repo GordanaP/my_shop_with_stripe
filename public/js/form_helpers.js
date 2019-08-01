@@ -83,6 +83,14 @@ function swalConfirmDelete(deleteRecordUrl, afterDeleteUrl)
             .done(function(response) {
                 swalAlertBox(response.message)
                 redirectTo(afterDeleteUrl)
+            })
+            .fail(function(xhr) {
+                if(xhr.status == 403)
+                {
+                    var warningMessage = 'You are not authorized to perform this action.';
+
+                    swalAlertBox(warningMessage, type="warning", title="Error!");
+                }
             });
         }
     });
