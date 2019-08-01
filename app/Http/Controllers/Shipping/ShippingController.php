@@ -10,6 +10,16 @@ use App\Http\Requests\CustomerRequest;
 class ShippingController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -59,6 +69,8 @@ class ShippingController extends Controller
      */
     public function edit(Shipping $shipping)
     {
+        $this->authorize('update', $shipping);
+
         return view('shippings.edit', compact('shipping'));
     }
 
@@ -71,6 +83,8 @@ class ShippingController extends Controller
      */
     public function update(CustomerRequest $request, Shipping $shipping)
     {
+        $this->authorize('update', $shipping);
+
         $shipping->updateData($request->validated());
 
         return redirect()->route('users.shippings.index', $shipping->registered_customer->user);
@@ -84,6 +98,8 @@ class ShippingController extends Controller
      */
     public function destroy(Shipping $shipping)
     {
+        $this->authorize('delete', $shipping);
+
         $shipping->delete();
 
         return response([

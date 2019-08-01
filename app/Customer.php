@@ -75,4 +75,9 @@ class Customer extends Model
 
         $this->shippings()->save($shipping);
     }
+
+    public function owns($model)
+    {
+        return $this->id == $model->registered_customer_id;
+    }
 }

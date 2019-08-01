@@ -151,7 +151,7 @@ class User extends Authenticatable
     public function isRequestedUser($user)
     {
         return $this->id == $user->id;
-    }
+}
 
     /**
      * Get all the addresses for the user.

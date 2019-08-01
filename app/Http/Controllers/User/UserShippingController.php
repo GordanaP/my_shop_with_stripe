@@ -28,6 +28,8 @@ class UserShippingController extends Controller
      */
     public function index(User $user)
     {
+        $this->authorize('view', $user);
+
         return view('shippings.index', compact('user'));
     }
 
@@ -39,6 +41,9 @@ class UserShippingController extends Controller
      */
     public function create(User $user)
     {
+        $this->authorize('create', Shipping::class);
+        $this->authorize('view', $user);
+
         return view('shippings.create', compact('user'));
     }
 
@@ -51,6 +56,9 @@ class UserShippingController extends Controller
      */
     public function store(CustomerRequest $request, User $user)
     {
+        $this->authorize('create', Shipping::class);
+        $this->authorize('view', $user);
+
         $user->customer->addShipping($request->validated());
 
         return redirect()->route('users.shippings.index', compact('user'));
@@ -65,6 +73,10 @@ class UserShippingController extends Controller
      */
     public function update(User $user, Shipping $shipping = null)
     {
+        $this->authorize('view', $user);
+
+        $shipping ? $this->authorize('update', $shipping) : '';
+
         $user->setNewDefaultAddress($shipping);
 
         return back();
