@@ -54,7 +54,6 @@ function clearFormFields()
     $('form').trigger('reset');
 }
 
-
 /**
  * Show the SweetAlert2 confirmation dialogue.
  *
@@ -146,7 +145,6 @@ function clearHiddenServerSideErrorsPureJS(hiddenField) {
     var invalidFeedbackFields = hiddenField.querySelectorAll('.invalid-feedback');
     var isInvalidFields = hiddenField.querySelectorAll('.is-invalid');
     var formFields = hiddenField.querySelectorAll('input');
-
 
     removeFields(invalidFeedbackFields)
 

@@ -76,6 +76,12 @@ class Customer extends Model
         $this->shippings()->save($shipping);
     }
 
+    /**
+     * Determine if the customer owns the model.
+     *
+     * @param  \App\Model $model
+     * @return boolean
+     */
     public function owns($model)
     {
         return $this->id == $model->customer_id;

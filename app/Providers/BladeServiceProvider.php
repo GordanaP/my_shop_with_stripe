@@ -29,7 +29,7 @@ class BladeServiceProvider extends ServiceProvider
         Blade::component('components.settings_option', 'settings');
 
         Blade::if('withProfile', function ($user) {
-            return $user->hasProfile();
+            return optional($user)->hasProfile();
         });
     }
 }

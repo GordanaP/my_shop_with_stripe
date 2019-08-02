@@ -3,7 +3,6 @@
 @section('title', 'Checkout')
 
 @section('content')
-
     <header>
         <h1>Checkout</h1>
         <hr>
@@ -15,7 +14,8 @@
                 <div id="billingAddress" class="w-4/5">
                     <p>
                         <span class="font-bold">Billing Address</span>
-                        @if (optional($user)->hasProfile())
+
+                        @withProfile($user)
                             <a href="{{ route('customers.edit', $user->customer) }}" class="ml-1">
                                 Change
                             </a>
@@ -27,42 +27,48 @@
                                     Different shipping address
                                 </label>
                             </span>
-                        @endif
+                        @endwithProfile
                     </p>
 
                     <div class="card card-body">
-                        @if (optional($user)->hasProfile())
-                            @include('customers.html._profile_details', [
+                        @withProfile($user)
+                            @include('customers.partials.html._show_details', [
                                 'customer' => $user->customer
                             ])
                         @else
                             @include('checkouts.partials.forms._add_address', [
                                 'address' => 'billing'
                             ])
-                        @endif
+                        @endwithProfile
                     </div>
                 </div>
 
-                <div id="shippingAddress" class="w-4/5 {{ optional($user)->hasProfile() ? '' : 'hidden'  }} mt-3">
+                <div id="shippingAddress" class="w-4/5 @withProfile($user) @else hidden @endwithProfile mt-3">
                     <p class="font-medium">
                         Shipping Address
-                        @if (optional($user)->hasProfile())
+                        @withProfile($user)
                             <a href="{{ route('customers.edit', $user->customer) }}" class="ml-1">
                                 Change
                             </a>
-                        @endif
+                        @endwithProfile
                     </p>
 
                     <div class="card card-body">
-                        @if (optional($user)->hasProfile())
-                            @include('customers.html._profile_details', [
-                                'customer' => $user->customer
+                        @withProfile($user)
+                            <p class="mb-2">
+                                <span class="bg-orange-400 text-xs px-2 py-1 rounded-lg text-white">
+                                    Default
+                                </span>
+                            </p>
+
+                            @include('customers.partials.html._show_details', [
+                                'customer' => $user->getDefaultAddress()
                             ])
                         @else
                             @include('checkouts.partials.forms._add_address', [
                                 'address' => 'shipping'
                             ])
-                        @endif
+                        @endwithProfile
                     </div>
                 </div>
             </div><!-- /.col-md-6 -->
@@ -102,6 +108,7 @@
             'country', 'phone', 'email'
         ];
 
+        // Remove errors after hiding the hidden address form
         if(toggleHiddenAddressCheckbox)
         {
             toggleHiddenAddressCheckbox.addEventListener('change', function(event) {
