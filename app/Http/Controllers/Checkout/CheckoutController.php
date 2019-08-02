@@ -15,7 +15,7 @@ class CheckoutController extends Controller
     {
         return view('checkouts.index')->with([
             'user' => $user ?? '',
-            'selected_delivery' => $user->getDefaultAddress()
+            'selected_delivery' => optional($user)->getDefaultAddress()
         ]);
     }
 

@@ -11,82 +11,30 @@
     <form id="checkoutForm">
         <div class="row">
             <div class="col-md-6">
-                <div id="billingAddress" class="w-4/5">
-                    <p>
-                        <span class="font-bold">Billing Address</span>
+                <section id="checkoutAddresses">
 
-                        @withProfile($user)
-                            <a href="{{ route('customers.edit', $user->customer) }}" class="ml-1">
-                                Change
-                            </a>
-                        @else
-                            <span class="pull-right">
-                                <input id="toggleShippingAddress" type="checkbox" class="form-check-input"
-                                    onclick="toggleHiddenFieldVisibility('#shippingAddress')" />
-                                <label class="form-check-label font-normal" for="toggleShippingAddress">
-                                    Different shipping address
-                                </label>
-                            </span>
-                        @endwithProfile
-                    </p>
-
-                    <div class="card card-body">
-                        <p class="uppercase mb-1">{{ optional(optional($user)->customer)->full_name }}</p>
-
-                        @withProfile($user)
-                            @include('customers.partials.html._show_details', [
-                                'customer' => $user->customer
-                            ])
-                        @else
-                            @include('checkouts.partials.forms._add_address', [
-                                'address' => 'billing'
-                            ])
-                        @endwithProfile
+                    <div id="billingAddress" class="w-4/5">
+                        @include('checkouts.partials.html._billing_address')
                     </div>
-                </div>
 
-                <div id="shippingAddress" class="w-4/5 @withProfile($user) @else hidden @endwithProfile mt-3">
-                    <p class="font-medium">
-                        Shipping Address
-                        @withProfile($user)
-                            <a href="{{ route('users.select.delivery', $user) }}" class="ml-1">
-                                Change
-                            </a>
-                        @endwithProfile
-                    </p>
-
-                    <div class="card card-body">
-                        @withProfile($user)
-                            <p class="uppercase mb-1">
-
-                                {{ $selected_delivery->full_name }}
-
-                                @if (optional($selected_delivery)->is_default)
-                                    <span class="bg-orange-400 text-xs px-2 py-1 rounded-lg text-white">
-                                        Default
-                                    </span>
-                                @endif
-                            </p>
-                            @include('customers.partials.html._show_details', [
-                                'customer' => $user->getDefaultAddress()
-                            ])
-                        @else
-                            @include('checkouts.partials.forms._add_address', [
-                                'address' => 'shipping'
-                            ])
-                        @endwithProfile
+                    <div id="shippingAddress" class="w-4/5 @withProfile($user) @else hidden @endwithProfile mt-3">
+                        @include('checkouts.partials.html._shipping_address')
                     </div>
-                </div>
-            </div><!-- /.col-md-6 -->
+                </section>
+            </div>
 
             <div class="col-md-6">
-                <p class="font-bold">My Order</p>
+                <section id="OrderDetails">
+                    <p class="font-bold">My Order</p>
+                </section>
 
-                <p class="font-bold">Payment Info</p>
+                <section id="paymentInfo">
+                    <p class="font-bold">Payment Info</p>
 
-                <button type="button" class="btn btn-primary" id="checkoutButton">
-                    Checkout
-                </button>
+                    <button type="button" class="btn btn-primary" id="checkoutButton">
+                        Checkout
+                    </button>
+                </section>
             </div><!-- /.col-md-6 -->
         </div><!-- /.row -->
     </form>
