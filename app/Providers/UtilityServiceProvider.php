@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Utilities\Price;
 use App\Services\Utilities\Country;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,5 +31,10 @@ class UtilityServiceProvider extends ServiceProvider
         $this->app->bind('country-list', function() {
             return new Country();
         });
+
+        $this->app->bind('price', function() {
+            return new Price();
+        });
+
     }
 }

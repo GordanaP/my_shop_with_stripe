@@ -59,7 +59,6 @@ Route::get('user-checkout/{user}/select-delivery-address/{shipping?}', 'Checkout
 Route::post('checkouts/addresses', 'Checkout\CheckoutAddressController@store')
     ->name('checkouts.addresses.store');
 
-
 /**
  * CheckoutSuccess
  */
@@ -71,6 +70,11 @@ Route::get('/checkout/success', 'Checkout\CheckoutSuccessController')
  */
 Route::get('/checkout/error', 'Checkout\CheckoutErrorController')
     ->name('checkouts.error');
+
+/**
+ * Product
+ */
+Route::resource('products', 'Product\ProductController');
 
 
 /**
