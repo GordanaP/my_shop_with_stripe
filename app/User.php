@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Customer;
 use App\Traits\User\HasAccount;
 use App\Traits\User\HasAddress;
 use App\Traits\User\HasProfile;

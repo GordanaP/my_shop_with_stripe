@@ -35,6 +35,8 @@ Route::resource('shippings', 'Shipping\ShippingController');
  */
 Route::patch('users/{user}/shippings/{shipping?}', 'User\UserShippingController@update')
 ->name('users.shippings.update');
+Route::get('users/{user}/select-delivery-address',  'User\UserShippingController@index')
+    ->name('users.select.delivery');
 
 Route::resource('users.shippings', 'User\UserShippingController', [
     'only' => ['index', 'create', 'store']
@@ -48,13 +50,15 @@ Route::get('user-checkout/{user?}', 'Checkout\CheckoutController@index')
     ->name('users.checkouts.index');
 Route::post('user-checkout/{user?}', 'Checkout\CheckoutController@store')
     ->name('users.checkouts.store');
-
+Route::get('user-checkout/{user}/select-delivery-address/{shipping?}', 'Checkout\CheckoutAddressController@show')
+    ->name('checkouts.addresses.show');
 
 /**
  * CheckoutAddress
  */
-Route::post('checkouts/addresses', 'Checkout\CheckoutAddressController')
+Route::post('checkouts/addresses', 'Checkout\CheckoutAddressController@store')
     ->name('checkouts.addresses.store');
+
 
 /**
  * CheckoutSuccess

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Checkout;
 
+use App\User;
 use App\Customer;
+use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +18,7 @@ class CheckoutAddressController extends Controller
      * @param \App\Http\Requests\CheckoutAddressRequest $request
      * @return void
      */
-    public function __invoke(CheckoutAddressRequest $request)
+    public function store(CheckoutAddressRequest $request)
     {
         $billing = collect(['billing' => collect($request->billing)]);
         $shipping = collect(['shipping' => collect($request->shipping)]);
@@ -24,5 +26,13 @@ class CheckoutAddressController extends Controller
         $address = $billing->union($shipping);
 
         Session::put('address', $address);
+    }
+
+    public function show(User $user, Shipping $shipping = null)
+    {
+        return view('checkouts.index')->with([
+            'user' => $user,
+            'selected_delivery' => $shipping ?: $user->customer
+        ]);
     }
 }

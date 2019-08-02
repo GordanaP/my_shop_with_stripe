@@ -31,6 +31,8 @@
                     </p>
 
                     <div class="card card-body">
+                        <p class="uppercase mb-1">{{ optional(optional($user)->customer)->full_name }}</p>
+
                         @withProfile($user)
                             @include('customers.partials.html._show_details', [
                                 'customer' => $user->customer
@@ -47,7 +49,7 @@
                     <p class="font-medium">
                         Shipping Address
                         @withProfile($user)
-                            <a href="{{ route('customers.edit', $user->customer) }}" class="ml-1">
+                            <a href="{{ route('users.select.delivery', $user) }}" class="ml-1">
                                 Change
                             </a>
                         @endwithProfile
@@ -55,12 +57,16 @@
 
                     <div class="card card-body">
                         @withProfile($user)
-                            <p class="mb-2">
-                                <span class="bg-orange-400 text-xs px-2 py-1 rounded-lg text-white">
-                                    Default
-                                </span>
-                            </p>
+                            <p class="uppercase mb-1">
 
+                                {{ $selected_delivery->full_name }}
+
+                                @if (optional($selected_delivery)->is_default)
+                                    <span class="bg-orange-400 text-xs px-2 py-1 rounded-lg text-white">
+                                        Default
+                                    </span>
+                                @endif
+                            </p>
                             @include('customers.partials.html._show_details', [
                                 'customer' => $user->getDefaultAddress()
                             ])

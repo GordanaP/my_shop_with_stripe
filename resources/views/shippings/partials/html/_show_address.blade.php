@@ -14,6 +14,7 @@
             @endif
         </p>
 
+        <p class="uppercase mb-0">{{ $address->full_name }}</p>
         @include('customers.partials.html._show_details', [
             'customer' => $address
         ])
@@ -37,3 +38,11 @@
         @endif
     </div>
 </div>
+
+@if (request()->route()->named('users.select.delivery'))
+    <a href="{{ route('checkouts.addresses.show', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}">
+        <div class="bg-gray-200 border hover:bg-gray-300 text-center text-lg py-2 w-full">
+            Deliver to this address
+        </div>
+    </a>
+@endif

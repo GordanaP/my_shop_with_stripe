@@ -2,6 +2,8 @@
 
 namespace App\Traits\User;
 
+use App\Customer;
+
 trait HasProfile
 {
     /**
