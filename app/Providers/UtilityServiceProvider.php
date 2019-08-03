@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use App\Services\Utilities\Price;
 use App\Services\Utilities\Country;
+use App\Services\Utilities\Converter;
+use App\Services\Utilities\Presenter;
+use App\Services\Utilities\Calculator;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Utilities\ShoppingCart;
 
 class UtilityServiceProvider extends ServiceProvider
 {
@@ -32,9 +35,20 @@ class UtilityServiceProvider extends ServiceProvider
             return new Country();
         });
 
-        $this->app->bind('price', function() {
-            return new Price();
+        $this->app->bind('converter', function() {
+            return new Converter();
         });
 
+        $this->app->bind('shopping-cart', function() {
+            return new ShoppingCart();
+        });
+
+        $this->app->bind('presenter', function() {
+            return new Presenter();
+        });
+
+        $this->app->bind('calculator', function() {
+            return new Calculator();
+        });
     }
 }

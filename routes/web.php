@@ -42,6 +42,14 @@ Route::resource('users.shippings', 'User\UserShippingController', [
     'only' => ['index', 'create', 'store']
 ]);
 
+/**
+ * CartItem
+ */
+Route::get('carts', 'Cart\CartItemController@index')->name('carts.index');
+Route::delete('carts', 'Cart\CartItemController@empty')->name('carts.empty');
+Route::post('carts/{product}', 'Cart\CartItemController@store')->name('carts.store');
+Route::patch('carts/{product}', 'Cart\CartItemController@update')->name('carts.update');
+Route::delete('carts/{product}', 'Cart\CartItemController@destroy')->name('carts.destroy');
 
 /**
  * UserCheckout

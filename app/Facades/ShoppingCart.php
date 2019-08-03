@@ -4,10 +4,10 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Price extends Facade
+class ShoppingCart extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'price';
+        return 'shopping-cart';
     }
 }

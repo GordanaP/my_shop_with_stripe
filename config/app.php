@@ -228,7 +228,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Country' => App\Facades\Country::class,
-        'Price' => App\Facades\Price::class,
+        'Converter' => App\Facades\Converter::class,
+        'ShoppingCart' => App\Facades\ShoppingCart::class,
+        'Presenter' => App\Facades\Presenter::class,
     ],
 
 ];
