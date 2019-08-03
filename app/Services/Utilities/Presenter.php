@@ -21,7 +21,7 @@ class Presenter
      * @param  mixed $value
      * @return string
      */
-    public function inProcents($value)
+    public function asPercent($value)
     {
         return $value . '%';
     }

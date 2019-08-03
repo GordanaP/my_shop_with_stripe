@@ -23,20 +23,34 @@
         @if (! ShoppingCart::fromSession()->isEmpty())
             <table class="table bg-white">
                 <thead>
-                    <th width="25%">Item</th>
+                    <th width="15%">Item</th>
+                    <th width="25%"></th>
                     <th class="text-center" width="20%">Price</th>
                     <th class="text-center" width="15%">Qty</th>
-                    <th class="text-right" width="25%">Subtotal</th>
+                    <th class="text-right" width="15%">Subtotal</th>
                     <th class="text-right"><i class="fa-fa-cog"></i></th>
                 </thead>
                 <tbody>
                     @foreach ($cartItems as $productId => $item)
                         @include('carts.partials.tables._row_item')
                     @endforeach
+
+                    @include('carts.partials.tables._row_price')
+
                 </tbody>
             </table>
+
+            <div class="flex justify-between items-center">
+                <span>
+                    <a href="{{ route('products.index') }}">Continue shopping</a>
+                </span>
+
+                <span>
+                    @include('carts.partials.forms._empty_cart')
+                </span>
+            </div>
         @else
-            The shopping cart is empty.
+            <p>The shopping cart is empty.</p>
         @endif
     </main>
 

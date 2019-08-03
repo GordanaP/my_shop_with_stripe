@@ -100,6 +100,8 @@ class CartItemController extends Controller
      */
     public function empty()
     {
+        ShoppingCart::fromSession()->destroy();
 
+        return redirect()->route('carts.index');
     }
 }

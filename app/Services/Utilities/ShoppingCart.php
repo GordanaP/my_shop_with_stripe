@@ -86,13 +86,6 @@ class ShoppingCart extends Collection
         $this->save();
     }
 
-    public function addSessionId($id)
-    {
-        $this->put('session_id', $id);
-
-        $this->save();
-    }
-
     /**
      * Get the cart's owner.
      *
@@ -106,27 +99,13 @@ class ShoppingCart extends Collection
     }
 
     /**
-     * Present the cart's subtotal in dollars and the currency.
+     * Present the cart's total in dollars and the currency.
      *
      * @return string
      */
-    public function presentSubtotal()
+    public function presentTotal()
     {
-        $subtotalInDollars = Calculator::divide($this->getSubtotalInCents(), 100);
-
-        return Presenter::inDollars($subtotalInDollars);
-    }
-
-    /**
-     * Present the cart's tax amount in dollars and the currency.
-     *
-     * @return string
-     */
-    public function presentTaxAmount()
-    {
-        $taxAmount = Calculator::divide($this->getTaxAmountInCents(), 100);
-
-        return Presenter::inDollars($taxAmount);
+        return Converter::toDollars($this->getTotalInCents());
     }
 
     /**
@@ -136,33 +115,40 @@ class ShoppingCart extends Collection
      */
     public function presentShippingCosts()
     {
-        $shippingCosts = Calculator::divide($this->getShippingCostsInCents(), 100);
-
-        return Presenter::inDollars($shippingCosts);
+        return Converter::toDollars($this->getShippingCostsInCents());
     }
 
     /**
-     * Present the cart's total in dollars and the currency.
+     * Present the cart's tax amount in dollars and the currency.
      *
      * @return string
      */
-    public function presentTotal()
+    public function presentTaxAmount()
     {
-        return Presenter::inDollars($this->getTotalInDollars());
-        // return Converter::inDollars($this->getTotalInCents());
+        return Converter::toDollars($this->getTaxAmountInCents());
     }
 
     public function presentTaxRate()
     {
         $taxRate = Calculator::multiply(config('cart.tax'), 100);
 
-        return Presenter::inProcent($taxRate);
+        return Presenter::asPercent($taxRate);
     }
 
-    public function getTotalInDollars()
+    /**
+     * Present the cart's subtotal in dollars and the currency.
+     *
+     * @return string
+     */
+    public function presentSubtotal()
     {
-        return Converter::toDollars($this->getTotalInCents());
+        return Converter::toDollars($this->getSubtotalInCents());
     }
+
+    // public function getTotalInDollars()
+    // {
+    //     return Converter::toDollars($this->getTotalInCents());
+    // }
 
     /**
      * Determine if there is any item in the cart.
@@ -234,7 +220,7 @@ class ShoppingCart extends Collection
      */
     public function getSubtotalInCents()
     {
-        return $this->sum('subtotal');
+        return $this->sum('subtotal_in_cents');
     }
 
     /**
