@@ -13,7 +13,7 @@
     </td>
 
     <td class="text-center">
-        Update qty
+        @include('carts.partials.forms._update_quantity')
     </td>
 
     <td class="text-right">
@@ -21,6 +21,6 @@
     </td>
 
     <td class="text-right">
-        Remove
+        @include('carts.partials.forms._remove_item')
     </td>
 </tr>

@@ -75,7 +75,9 @@ class CartItemController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        ShoppingCart::fromSession()->update($product, $request->quantity);
 
+        return back();
     }
 
     /**
@@ -86,7 +88,9 @@ class CartItemController extends Controller
      */
     public function destroy(Product $product)
     {
+        ShoppingCart::fromSession()->remove($product->id);
 
+        return back();
     }
 
     /**
