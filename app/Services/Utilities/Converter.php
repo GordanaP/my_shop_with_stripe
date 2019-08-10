@@ -15,7 +15,7 @@ class Converter
      */
     public function toCents($priceInDollars)
     {
-        return $priceInDollars * 100;
+        return Calculator::multiply($priceInDollars, 100);
     }
 
     /**

@@ -15,6 +15,6 @@ $factory->define(Shipping::class, function (Faker $faker) {
         'city' => $faker->city,
         'country' => 'rs',
         'phone' => $faker->phoneNumber,
-        'customer_id' => Customer::inRandomOrder()->first()->id,
+        'customer_id' => Customer::first()->id,
     ];
 });

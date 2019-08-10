@@ -44,7 +44,8 @@
 
 @if (request()->route()->named('users.select.delivery'))
     <div id="selectDeliveryAddress">
-        <a href="{{ route('checkouts.addresses.show', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}">
+        {{-- <a href="{{ route('checkouts.addresses.show', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}"> --}}
+            <a href="{{ route('checkout.registered.users.index', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}">
             <div class="bg-gray-200 border hover:bg-gray-300 text-center text-lg py-2 w-full">
                 Deliver to this address
             </div>

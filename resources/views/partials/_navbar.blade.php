@@ -16,7 +16,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.checkouts.index', Auth::user() ?? '') }}">
+                    <a class="nav-link" href="{{ Auth::user() ? route('checkout.registered.users.index', Auth::user()) : route('checkout.guests.index') }}">
                         Checkout
                     </a>
                 </li>

@@ -7,7 +7,7 @@
         <h1>Checkout</h1>
         <hr>
     </header>
-
+<p>{{ $user->isNotBillingAddress($selected_delivery) ? 'shipping' : 'billing' }}</p>
     <form id="checkoutForm">
         <div class="row">
             <div class="col-md-6">
@@ -44,14 +44,25 @@
 @section('scripts')
     <script>
 
+
         clearServerSideErrorOnNewInput();
 
-        var registeredCustomer = @json(optional($user)->hasProfile())
+        var registeredCustomer = @json(optional($user)->hasProfile());
+
+        var currentRoute = "{{ Route::currentRouteName() }}"
 
         var checkoutButton = document.querySelector('#checkoutButton');
-
         var checkoutAddressStoreUrl = "{{ route('checkouts.addresses.store') }}";
-        var usersCheckoutStoreUrl = "{{ route('users.checkouts.store', $user ?? '') }}";
+        {{-- var usersCheckoutStoreUrl = "{{ route('users.checkouts.store', $user ?? '') }}"; --}}
+
+        var shippingAddress = "{{ route('checkout.registered.users.store', [$user, $user->isNotBillingAddress($selected_delivery) ? $selected_delivery : '']) }}";
+
+
+        @if (Auth::user())
+            var usersCheckoutStoreUrl = "{{ route('checkout.registered.users.store', [$user, $user->isNotBillingAddress($selected_delivery) ? $selected_delivery : '']) }}";
+        @else
+            var usersCheckoutStoreUrl =  "{{ route('checkout.guests.store') }}";
+        @endif
 
         var hiddenAddress = document.querySelector('#shippingAddress');
         var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
@@ -96,9 +107,9 @@
                     method: 'POST',
                     success: function(result)
                     {
-                        console.log(result.message)
+                        console.log(result)
 
-                        redirectTo(result.redirectToUrl)
+                        // redirectTo(result.redirectToUrl)
                     }
                 });
             });

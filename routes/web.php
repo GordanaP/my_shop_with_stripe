@@ -34,7 +34,7 @@ Route::resource('shippings', 'Shipping\ShippingController');
  * UserShipping
  */
 Route::patch('users/{user}/shippings/{shipping?}', 'User\UserShippingController@update')
-->name('users.shippings.update');
+    ->name('users.shippings.update');
 Route::get('users/{user}/select-delivery-address',  'User\UserShippingController@index')
     ->name('users.select.delivery');
 
@@ -54,12 +54,19 @@ Route::delete('carts/{product}', 'Cart\CartItemController@destroy')->name('carts
 /**
  * UserCheckout
  */
-Route::get('user-checkout/{user?}', 'Checkout\CheckoutController@index')
-    ->name('users.checkouts.index');
-Route::post('user-checkout/{user?}', 'Checkout\CheckoutController@store')
-    ->name('users.checkouts.store');
+// Route::post('checkout/registered-user/{user}/{shipping?}', 'Checkout\CheckoutRegisteredUserController@store')
+//     ->name('checkout.registered.users.store');
+// Route::post('checkout/guest', 'Checkout\CheckoutController@store')
+//     ->name('checkout.guests.store');
 Route::get('user-checkout/{user}/select-delivery-address/{shipping?}', 'Checkout\CheckoutAddressController@show')
     ->name('checkouts.addresses.show');
+
+// Route::post('user-checkout', 'Checkout\CheckoutController@store')
+//     ->name('users.checkouts.store');
+// Route::post('user-checkout/{user}/select-delivery-address/{shipping?}', 'Checkout\CheckoutController@store')
+//     ->name('auth.users.checkouts.store');
+// Route::get('user-checkout/{user?}', 'Checkout\CheckoutController@index')
+//     ->name('users.checkouts.index');
 
 /**
  * CheckoutAddress
@@ -90,3 +97,18 @@ Route::resource('products', 'Product\ProductController');
  */
 Route::post('/test', 'TestController@store')->name('tests.store');
 
+
+/**
+ * Checkout
+ */
+Route::get('checkout/registered-user/{user}/{shipping?}', 'Checkout\CheckoutRegisteredUserController@index')
+    ->name('checkout.registered.users.index');
+
+Route::get('checkout/guest', 'Checkout\CheckoutGuestController@index')
+    ->name('checkout.guests.index');
+
+Route::post('checkout/registered-user/{user}/{shipping?}', 'Checkout\CheckoutRegisteredUserController@store')
+    ->name('checkout.registered.users.store');
+
+Route::post('checkout/guest', 'Checkout\CheckoutGuestController@store')
+    ->name('checkout.guests.store');

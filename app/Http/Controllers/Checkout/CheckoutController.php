@@ -6,40 +6,47 @@ use App\User;
 use App\Customer;
 use App\Shipping;
 use Illuminate\Http\Request;
+use App\Facades\ShoppingCart;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
-    public function index(User $user = null)
-    {
-        return view('checkouts.index')->with([
-            'user' => $user ?? '',
-            'selected_delivery' => optional($user)->getDefaultAddress()
-        ]);
-    }
+    // public function index(User $user = null)
+    // {
+    //     return view('checkouts.index')->with([
+    //         'user' => $user ?? '',
+    //         'selected_delivery' => optional($user)->getDefaultAddress()
+    //     ]);
+    // }
 
-    public function store(Request $request, User $user = null)
-    {
-        $billingAddress = Session::get('address')->get('billing');
-        $shippingAddress = Session::get('address')->get('shipping');
+    // public function store(Request $request, User $user = null, Shipping $shipping = null)
+    // {
+    //     return $user ?? 'no shipping';
 
-        if ($billingAddress->isNotEmpty()) {
+    //     // $billingAddress = ShoppingCart::fromSession()->getOwner('address', 'billing');
+    //     // $shippingAddress = ShoppingCart::fromSession()->getOwner('address', 'shipping');
 
-            $customer = $user ? optional($user)->addCustomer($billingAddress->toArray())
-                  : Customer::create($billingAddress->toArray());
-        }
+    //     // if ($billingAddress->isNotEmpty()) {
 
-        if ($shippingAddress->isNotEmpty()) {
+    //     //     $customer = $user ? optional($user)->addCustomer($billingAddress->toArray())
+    //     //           : Customer::create($billingAddress->toArray());
+    //     // }
+    //     // else
+    //     // {
+    //     //     $customer = $user->customer;
+    //     // }
 
-            $customer->addShipping($shippingAddress->toArray());
-        }
+    //     // if ($shippingAddress->isNotEmpty()) {
 
-        Session::forget('address');
+    //     //     $shipping = $customer->addShipping($shippingAddress->toArray());
+    //     // }
 
-        return response([
-            'message' => 'success',
-            'redirectToUrl' => route('checkouts.success')
-        ]);
-    }
+    //     // Session::forget('address');
+
+    //     // return response([
+    //     //     'message' => 'success',
+    //     //     'redirectToUrl' => route('checkouts.success')
+    //     // ]);
+    // }
 }

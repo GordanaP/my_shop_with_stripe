@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\User;
-use App\Customer;
 use App\Shipping;
 use Illuminate\Http\Request;
+use App\Facades\ShoppingCart;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CheckoutAddressRequest;
 
 class CheckoutAddressController extends Controller
@@ -25,7 +24,7 @@ class CheckoutAddressController extends Controller
 
         $address = $billing->union($shipping);
 
-        Session::put('address', $address);
+        ShoppingCart::fromSession()->complete($address);
     }
 
     public function show(User $user, Shipping $shipping = null)

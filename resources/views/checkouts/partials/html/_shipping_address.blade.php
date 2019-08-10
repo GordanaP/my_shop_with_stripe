@@ -11,7 +11,8 @@
     @withProfile($user)
         <p class="uppercase mb-1">
 
-            {{ $selected_delivery->full_name }}
+            {{-- {{ $selected_delivery->full_name }} --}}
+            {{ optional($shipping)->full_name ?: $user->getDefaultAddress()->full_name }}
 
             @if (optional($selected_delivery)->is_default)
                 <span class="bg-orange-400 text-xs px-2 py-1 rounded-lg text-white">
@@ -20,7 +21,8 @@
             @endif
         </p>
         @include('customers.partials.html._show_details', [
-            'customer' => $user->getDefaultAddress()
+            {{-- 'customer' => $user->getDefaultAddress() --}}
+            'customer' => $shipping ?: $user->getDefaultAddress()
         ])
     @else
         @include('checkouts.partials.forms._add_address', [

@@ -7,7 +7,6 @@
         <h4>
             <span>Your shopping cart</span>
             <span class="float-right" style="font-size: 14px">
-                <a href="{{ route('products.index') }}">Continue shopping</a>
                 @if (! ShoppingCart::fromSession()->isEmpty())
                     <a href="{{ route('users.checkouts.index', Auth::user() ?? '') }}"
                     class="btn btn-primary ml-2">
