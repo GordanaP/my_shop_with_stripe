@@ -1,6 +1,8 @@
 .gabriela { font-family: 'Gabriela', serif; }
-.roboto { font-family: 'Roboto', sans-serif; }
 label { font-weight: 500 }
+
+a { color:inherit; text-decoration: none !important; }
+a:hover { color:inherit; }
 
 /*.swal2-confirm:focus {
     box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(229, 62, 62, .4) !important;

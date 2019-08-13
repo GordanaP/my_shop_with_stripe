@@ -8,7 +8,7 @@
             <span>Your shopping cart</span>
             <span class="float-right" style="font-size: 14px">
                 @if (! ShoppingCart::fromSession()->isEmpty())
-                    <a href="{{ route('users.checkouts.index', Auth::user() ?? '') }}"
+                    <a href="{{ Auth::user() ? route('checkout.registered.users.index', Auth::user()) : route('checkout.guests.index') }}"
                     class="btn btn-primary ml-2">
                         Checkout
                     </a>

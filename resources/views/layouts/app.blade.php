@@ -5,7 +5,7 @@
     @include('partials._head')
 </head>
 
-<body class="roboto">
+<body class="bg-gray-200 text-gray-900 font-sans antialiased">
     <div id="app">
 
         @include('partials._navbar')
