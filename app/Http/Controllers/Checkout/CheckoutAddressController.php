@@ -26,12 +26,4 @@ class CheckoutAddressController extends Controller
 
         ShoppingCart::fromSession()->complete($address);
     }
-
-    public function show(User $user, Shipping $shipping = null)
-    {
-        return view('checkouts.index')->with([
-            'user' => $user,
-            'selected_delivery' => $shipping ?: $user->customer
-        ]);
-    }
 }

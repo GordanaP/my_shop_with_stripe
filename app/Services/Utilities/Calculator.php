@@ -25,7 +25,7 @@ class Calculator
      */
     public function divide($a, $b)
     {
-        return $a / $b;
+        return number_format(($a / $b), 2);
     }
 
     /**

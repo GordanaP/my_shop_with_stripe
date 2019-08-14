@@ -5,6 +5,7 @@ namespace App\Services\Utilities;
 use App\Facades\Converter;
 use App\Facades\Presenter;
 use App\Facades\Calculator;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use App\Services\Utilities\CartItem;
 
@@ -105,7 +106,7 @@ class ShoppingCart extends Collection
      */
     public function presentTotal()
     {
-        return Converter::toDollars($this->getTotalInCents());
+        return Str::presentInDollars($this->getTotalInCents());
     }
 
     /**
@@ -115,7 +116,7 @@ class ShoppingCart extends Collection
      */
     public function presentShippingCosts()
     {
-        return Converter::toDollars($this->getShippingCostsInCents());
+        return Str::presentInDollars($this->getShippingCostsInCents());
     }
 
     /**
@@ -125,14 +126,12 @@ class ShoppingCart extends Collection
      */
     public function presentTaxAmount()
     {
-        return Converter::toDollars($this->getTaxAmountInCents());
+        return Str::presentInDollars($this->getTaxAmountInCents());
     }
 
     public function presentTaxRate()
     {
-        $taxRate = Calculator::multiply(config('cart.tax'), 100);
-
-        return Presenter::asPercent($taxRate);
+        return Str::presentAsPercent(config('cart.tax'));
     }
 
     /**
@@ -142,13 +141,8 @@ class ShoppingCart extends Collection
      */
     public function presentSubtotal()
     {
-        return Converter::toDollars($this->getSubtotalInCents());
+        return Str::presentInDollars($this->getSubtotalInCents());
     }
-
-    // public function getTotalInDollars()
-    // {
-    //     return Converter::toDollars($this->getTotalInCents());
-    // }
 
     /**
      * Determine if there is any item in the cart.
@@ -158,20 +152,6 @@ class ShoppingCart extends Collection
     public function isEmpty()
     {
         return $this->sum('quantity') == 0;
-    }
-
-    /**
-     * Get the order summary
-     *
-     * @return illuminate\Support\Collection
-     */
-    public function getOrderSummary()
-    {
-        return collect([
-            'subtotal' => $this->getSubtotalInCents(),
-            'tax_amount' => $this->getTaxAmountInCents(),
-            'total' => $this->getTotalInCents(),
-        ]);
     }
 
     /**
@@ -210,7 +190,6 @@ class ShoppingCart extends Collection
         $taxAmount = Calculator::multiply($this->getSubtotalInCents(), config('cart.tax'));
 
         return round($taxAmount);
-        // return round($this->getSubtotalInCents() * config('cart.tax'));
     }
 
     /**

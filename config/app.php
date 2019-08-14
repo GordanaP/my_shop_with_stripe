@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
         App\Providers\UtilityServiceProvider::class,
+        App\Providers\MacroServiceProvider::class,
 
     ],
 
@@ -228,9 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Country' => App\Facades\Country::class,
-        'Converter' => App\Facades\Converter::class,
         'ShoppingCart' => App\Facades\ShoppingCart::class,
-        'Presenter' => App\Facades\Presenter::class,
+        'Calculator' => App\Facades\Calculator::class,
     ],
 
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Facades\Calculator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 

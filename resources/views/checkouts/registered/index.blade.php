@@ -7,28 +7,36 @@
         <h1>Checkout</h1>
         <hr>
     </header>
-<p>{{ $user->isNotBillingAddress($selected_delivery) ? 'shipping' : 'billing' }}</p>
+
     <form id="checkoutForm">
         <div class="row">
             <div class="col-md-6">
-                <section id="checkoutAddresses">
-
-                    <div id="billingAddress" class="w-4/5">
-                        @include('checkouts.partials.html._billing_address')
+                <section class="addresses-info w-4/5">
+                    <div class="billing-address">
+                        @include('checkouts.partials.html._registered_address', [
+                            'title' => 'Billing address',
+                            'route' => route('customers.edit', $user->customer),
+                            'default_delivery' => '',
+                            'customer' => $user->customer,
+                        ])
                     </div>
 
-                    <div id="shippingAddress" class="w-4/5 @withProfile($user) @else hidden @endwithProfile mt-3">
-                        @include('checkouts.partials.html._shipping_address')
+                    <div class="shipping-address mt-8">
+                        @include('checkouts.partials.html._registered_address', [
+                            'title' => 'Shipping address',
+                            'route' => route('users.select.delivery', $user),
+                            'customer' => $shipping ?: ($default_delivery ?: $user->customer),
+                        ])
                     </div>
                 </section>
             </div>
 
             <div class="col-md-6">
-                <section id="OrderDetails">
+                <section id="order-info">
                     <p class="font-bold">My Order</p>
                 </section>
 
-                <section id="paymentInfo">
+                <section id="payment-info">
                     <p class="font-bold">Payment Info</p>
 
                     <button type="button" class="btn btn-primary" id="checkoutButton">
@@ -55,11 +63,11 @@
         var checkoutAddressStoreUrl = "{{ route('checkouts.addresses.store') }}";
         {{-- var usersCheckoutStoreUrl = "{{ route('users.checkouts.store', $user ?? '') }}"; --}}
 
-        var shippingAddress = "{{ route('checkout.registered.users.store', [$user, $user->isNotBillingAddress($selected_delivery) ? $selected_delivery : '']) }}";
+        var shippingAddress = "{{ route('checkout.registered.users.store', [$user, optional($user)->isNotBillingAddress($default_delivery) ? $default_delivery : '']) }}";
 
 
         @if (Auth::user())
-            var usersCheckoutStoreUrl = "{{ route('checkout.registered.users.store', [$user, $user->isNotBillingAddress($selected_delivery) ? $selected_delivery : '']) }}";
+            var usersCheckoutStoreUrl = "{{ route('checkout.registered.users.store', [$user, optional($user)->isNotBillingAddress($default_delivery) ? $default_delivery : '']) }}";
         @else
             var usersCheckoutStoreUrl =  "{{ route('checkout.guests.store') }}";
         @endif

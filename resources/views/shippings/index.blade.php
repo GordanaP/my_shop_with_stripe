@@ -5,7 +5,6 @@
 @section('content')
     <header>
         <div  class="flex justify-between items-center">
-
             <h2 class="mb-0">My Address Book</h2>
 
             @withProfile($user)

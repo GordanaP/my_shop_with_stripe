@@ -1,18 +1,19 @@
 <tr>
     <td>
-        <img class="img-fluid img-thumbnail w-full" src="https://source.unsplash.com/aob0ukAYfuI/400x300" alt="{{ $item->name }}">
+        <img class="img-fluid rounded w-4/5" src="{{ asset('images/test.jpg') }}"
+        alt="{{ $item->name }}">
     </td>
     <td>
         <p class="text-uppercase mb-2">
-            <a href="#">
+            <a href="#" class="font-semibold tracking-wide">
                 {{ $item->name }}
             </a>
         </p>
-        <p class="text-xs">{{ $item->description }}</p>
+        <p class="text-xs text-gray-500">{{ $item->description }}</p>
     </td>
 
     <td class="text-center">
-        {{ $item->price_presented_in_dollars }}
+        {{ $item->price_in_dollars }}
     </td>
 
     <td class="text-center">
@@ -20,7 +21,7 @@
     </td>
 
     <td class="text-right">
-        {{ Converter::toDollars($item->subtotal_in_cents) }}
+        {{ Str::presentInDollars($item->subtotal_in_cents) }}
     </td>
 
     <td class="text-right">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Checkout;
+namespace App\Http\Controllers\Checkout\Confirmation;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

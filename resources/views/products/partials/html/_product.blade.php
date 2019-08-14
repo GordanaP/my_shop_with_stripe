@@ -1,12 +1,12 @@
 <div class="col-sm-6 col-md-3">
-    <a href="$">
+    <a href="#" style="text-decoration: none; color: inherit;">
         <div class="card hoverable-card shadow">
             <img class="card-img-top" src="{{ asset('images/test.jpg') }}">
 
             <div class="card-body">
                 <h5 class="card-title">{{ $product->name }}</h5>
 
-                <p>{{ $product->price_presented_in_dollars }}</p>
+                <p>{{ $product->price_in_dollars }}</p>
 
                 <p class="card-text text-gray-600">{{ $product->description }}</p>
 

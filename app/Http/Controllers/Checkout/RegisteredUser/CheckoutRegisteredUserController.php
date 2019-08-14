@@ -1,21 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Checkout;
+namespace App\Http\Controllers\Checkout\RegisteredUser;
 
+use App\User;
+use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CheckoutGuestController extends Controller
+class CheckoutRegisteredUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('checkouts.index')->with([
-            'user' => ''
+        return view('checkouts.registered.index')->with([
+            'user' => $user,
+            'default_delivery' => $user->getDefaultAddress(),
+            'shipping' => ''
         ]);
     }
 
@@ -35,18 +39,21 @@ class CheckoutGuestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user, Shipping $shipping = null)
     {
-        //
+        return response([
+            'user' => $user,
+            'shipping' => $shipping,
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
     }
@@ -54,10 +61,10 @@ class CheckoutGuestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         //
     }
@@ -66,10 +73,10 @@ class CheckoutGuestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -77,10 +84,10 @@ class CheckoutGuestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
     }
