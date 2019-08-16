@@ -33,11 +33,10 @@ Route::resource('shippings', 'Shipping\ShippingController');
 /**
  * UserShipping
  */
-Route::patch('users/{user}/shippings/{shipping?}', 'User\UserShippingController@update')
+Route::patch('users/shippings/{user}/{shipping?}', 'User\UserShippingController@update')
     ->name('users.shippings.update');
 Route::get('users/{user}/select-delivery-address',  'User\UserShippingController@index')
     ->name('users.select.delivery');
-
 Route::resource('users.shippings', 'User\UserShippingController', [
     'only' => ['index', 'create', 'store']
 ]);
@@ -52,14 +51,14 @@ Route::patch('carts/{product}', 'Cart\CartItemController@update')->name('carts.u
 Route::delete('carts/{product}', 'Cart\CartItemController@destroy')->name('carts.destroy');
 
 /**
- * Checkout Registered
+ * Checkout User
  */
-Route::get('checkout/registered-user/{user}', 'Checkout\RegisteredUser\CheckoutRegisteredUserController@index')
-    ->name('checkout.registered.users.index');
-Route::get('checkout/registered-user/select-delivery-address/{user}/{shipping?}', 'Checkout\RegisteredUser\CheckoutRegisteredUserShippingController@index')
-    ->name('checkout.registered.users.shippings.index');
-Route::post('checkout/registered-user/{user}/{shipping?}', 'Checkout\RegisteredUser\CheckoutRegisteredUserController@store')
-    ->name('checkout.registered.users.store');
+Route::get('checkout/users/{user}', 'Checkout\User\CheckoutUserController@index')
+    ->name('checkout.users.index');
+Route::post('checkout/users/{user}', 'Checkout\User\CheckoutUserController@store')
+    ->name('checkout.users.store');
+Route::get('checkout/users/select-delivery-address/{user}/{shipping?}', 'Checkout\User\CheckoutUserShippingController@index')
+    ->name('checkout.users.shippings.index');
 
 /**
  * Checkout Guest
@@ -93,5 +92,3 @@ Route::resource('products', 'Product\ProductController');
  * Test
  */
 Route::post('/test', 'TestController@store')->name('tests.store');
-
-

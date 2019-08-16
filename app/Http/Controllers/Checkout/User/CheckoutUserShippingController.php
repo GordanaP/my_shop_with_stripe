@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Checkout\RegisteredUser;
+namespace App\Http\Controllers\Checkout\User;
 
 use App\User;
 use App\Shipping;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CheckoutRegisteredUserShippingController extends Controller
+class CheckoutUserShippingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class CheckoutRegisteredUserShippingController extends Controller
      */
     public function index(User $user, Shipping $shipping = null)
     {
-        return view('checkouts.registered.index')->with([
+        return view('checkouts.customers.index')->with([
             'user' => $user,
             'shipping' => $shipping ?: $user->customer,
             'default_delivery' => '',

@@ -38,7 +38,7 @@
 
 @if (request()->route()->named('users.select.delivery'))
     <div id="selectDeliveryAddress" class="shadow">
-        <a href="{{ route('checkout.registered.users.shippings.index', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}" style="text-decoration: none !important">
+        <a href="{{ route('checkout.users.shippings.index', [$user, $user->isNotBillingAddress($address) ? $address->id : '']) }}" style="text-decoration: none !important">
             <div class="border hover:bg-gray-300 text-center text-lg text-blue-800 py-2 w-full">
                 Deliver to this address
             </div>

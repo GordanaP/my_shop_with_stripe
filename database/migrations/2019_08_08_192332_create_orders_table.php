@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('order_number');
 
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers')
@@ -28,6 +29,7 @@ class CreateOrdersTable extends Migration
             $table->integer('tax_amount_in_cents');
             $table->integer('shipping_costs_in_cents');
             $table->integer('total_in_cents');
+            $table->string('stripe_payment_id');
             $table->boolean('paid')->default(false);
 
             $table->timestamps();

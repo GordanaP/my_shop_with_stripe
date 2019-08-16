@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Checkout\RegisteredUser;
+namespace App\Http\Controllers\Checkout\User;
 
 use App\User;
 use App\Shipping;
 use Illuminate\Http\Request;
+use App\Facades\ShoppingCart;
 use App\Http\Controllers\Controller;
+use App\Actions\CompletePurchaseAction;
 
-class CheckoutRegisteredUserController extends Controller
+class CheckoutUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +18,7 @@ class CheckoutRegisteredUserController extends Controller
      */
     public function index(User $user)
     {
-        return view('checkouts.registered.index')->with([
+        return view('checkouts.customers.index')->with([
             'user' => $user,
             'default_delivery' => $user->getDefaultAddress(),
             'shipping' => ''
@@ -39,11 +41,14 @@ class CheckoutRegisteredUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user, Shipping $shipping = null)
+    public function store(Request $request, User $user)
     {
+        $paymentIntent = '1234567';
+
+        (new CompletePurchaseAction($user))->execute($paymentIntent);
+
         return response([
-            'user' => $user,
-            'shipping' => $shipping,
+            'message' => 'success'
         ]);
     }
 

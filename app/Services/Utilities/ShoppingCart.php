@@ -155,6 +155,21 @@ class ShoppingCart extends Collection
     }
 
     /**
+     * Get the order summary
+     *
+     * @return illuminate\Support\Collection
+     */
+    public function getSummary()
+    {
+        return collect([
+            'subtotal_in_cents' => $this->getSubtotalInCents(),
+            'tax_amount_in_cents' => $this->getTaxAmountInCents(),
+            'shipping_costs_in_cents' => $this->getShippingCostsInCents(),
+            'total_in_cents' => $this->getTotalInCents(),
+        ]);
+    }
+
+    /**
      * Calculate the cart's total in cents.
      *
      * @return integer

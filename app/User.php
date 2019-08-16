@@ -82,4 +82,15 @@ class User extends Authenticatable
     {
         return $this->id == $user->id;
     }
+
+    public function getCheckoutShippingAddress($shipping = null)
+    {
+        if (request()->route()->named('checkout.users.index')) {
+            return $this->getDefaultAddress();
+        }
+
+        if(request()->route()->named('checkout.users.shippings.index')) {
+            return $shipping ?? $this->customer;
+        }
+    }
 }

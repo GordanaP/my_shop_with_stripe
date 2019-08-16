@@ -40,6 +40,16 @@ class Shipping extends Model
     }
 
     /**
+     * Get the order that belongs to the shipping.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    /**
      * Get the shipping from a form.
      *
      * @param  array $data
@@ -105,4 +115,6 @@ class Shipping extends Model
             $this->setAsNondefault();
         }
     }
+
+
 }
