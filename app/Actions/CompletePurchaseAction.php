@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Order;
-use App\Facades\ShoppingCart;
 use App\Traits\Order\Purchasable;
 use App\Actions\CreateOrderCustomerAction;
 
@@ -51,29 +50,6 @@ class CompletePurchaseAction
             return $this->createGuestShippingId($customer);
         }
     }
-
-    // public function getRegisteredShippingId()
-    // {
-    //     $shippingAddress = collect(request()->address);
-
-    //     return $shippingAddress->has('customer_id') ? $shippingAddress->get('id') : null;
-    // }
-
-    // public function createRegisteredShippingId($customer)
-    // {
-    //     $address = collect(request()->address);
-    //     $shipping = $address->get('shipping');
-
-    //     return $address->has('shipping')
-    //         ? $customer->shippings()->create($shipping)->id : null;
-    // }
-
-    // public function createGuestShippingId($customer)
-    // {
-    //     $shippingAddress = ShoppingCart::fromSession()->getOwner('address', 'shipping')->toArray();
-
-    //     return $shippingAddress ? $customer->shippings()->create($shippingAddress)->id : null;
-    // }
 
     public function getCustomer($user)
     {

@@ -2,11 +2,12 @@
 
 namespace App\Actions;
 
-use App\Customer;
-use App\Facades\ShoppingCart;
+use App\Traits\Order\Purchasable;
 
 class CreateOrderCustomerAction
 {
+    use Purchasable;
+
     public $user;
 
     public function __construct($user = null)
@@ -27,25 +28,5 @@ class CreateOrderCustomerAction
         if(! $this->user) {
             return $this->createGuestCustomer();
         }
-    }
-
-    public function getRegisteredCustomer()
-    {
-        return $this->user->customer;
-    }
-
-    public function createRegisteredCustomer()
-    {
-        $billingAddress = request()->address['billing'];
-
-        return $this->user->addCustomer($billingAddress);
-    }
-
-    public function createGuestCustomer()
-    {
-        $billingAddress = ShoppingCart::fromSession()->getOwner('address', 'billing')
-            ->toArray();
-
-        return Customer::create($billingAddress);
     }
 }
