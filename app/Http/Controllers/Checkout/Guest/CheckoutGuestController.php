@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Checkout\Guest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Actions\CompleteOrderInfoAction;
+use App\Actions\CompletePurchaseAction;
 
 class CheckoutGuestController extends Controller
 {
@@ -20,29 +20,9 @@ class CheckoutGuestController extends Controller
 
     public function store(Request $request)
     {
-        return (new CompleteOrderInfoAction())->execute();
+        $paymentIntent = '123457';
+
+        return (new CompletePurchaseAction())->execute($paymentIntent);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function store(Request $request)
-    // {
-    //     $paymentIntent = '1234567';
-
-    //     // $order = (new CompleteOrderShippingAction($this->getCustomer()))->execute();
-    //     $order = (new CompleteOrderShippingAction())->execute();
-
-    //     $order->completePayment($paymentIntent);
-
-    //     $this->getCustomer()->placeOrder($order);
-
-    //     return response([
-    //         'message' => 'success'
-    //     ]);
-    // }
-    //
 }

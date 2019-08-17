@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\CompletePurchaseAction;
-use App\Actions\CompleteOrderInfoAction;
 
 class CheckoutUserController extends Controller
 {
@@ -26,29 +25,9 @@ class CheckoutUserController extends Controller
 
     public function store(Request $request, User $user)
     {
-        return (new CompleteOrderInfoAction($user))->execute();
+        $paymentIntent = '1234567';
+
+        return (new CompletePurchaseAction($user))->execute($paymentIntent);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function store(Request $request, User $user)
-    // {
-    //     $paymentIntent = '1234567';
-
-    //     // $order = (new CompleteOrderShippingAction($user->customer))->execute();
-    //     $order = (new CompleteOrderShippingAction($user))->execute();
-
-    //     $order->completePayment($paymentIntent);
-
-    //     $user->customer->placeOrder($order);
-
-    //     return response([
-    //         'message' => 'success'
-    //     ]);
-    // }
-    //
 }

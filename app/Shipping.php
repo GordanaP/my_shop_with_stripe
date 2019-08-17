@@ -68,6 +68,7 @@ class Shipping extends Model
     public static function fromShoppingCart()
     {
         return ShoppingCart::fromSession()->getOwner('address', 'shipping')->toArray();
+
     }
 
     /**
@@ -121,6 +122,4 @@ class Shipping extends Model
             $this->setAsNondefault();
         }
     }
-
-
 }
