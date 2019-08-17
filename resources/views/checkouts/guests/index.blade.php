@@ -51,6 +51,10 @@
 
         clearServerSideErrorOnNewInput();
 
+        var checkoutButton = document.querySelector('#checkoutButton');
+        var checkoutGuestStoreUrl = "{{ route('checkout.guests.store') }}";
+        var checkoutGuestAddressStoreUrl = "{{ route('checkout.guests.addresses.store') }}";
+
         var hiddenAddress = document.querySelector('#guestShippingAddress');
         var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
         var billing = 'billing';
@@ -59,6 +63,51 @@
             'first_name', 'last_name', 'street_address', 'postal_code', 'city',
             'country', 'phone', 'email'
         ];
+
+        checkoutButton.addEventListener('click', function() {
+
+            $.ajax({
+                url: checkoutGuestAddressStoreUrl,
+                method: "POST",
+                data: getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields)
+            })
+            .done(function() {
+                $.ajax({
+                    url: checkoutGuestStoreUrl,
+                    type: "POST",
+                    data: {
+                        payment_method_id: 'dummy234'
+                    },
+                    success: function(response)
+                    {
+                        console.log(response);
+                    }
+                });
+            })
+            .fail(function() {
+                console.log('failed')
+            });
+
+
+            // $.ajax({
+            //     url: checkoutGuestAddressStoreUrl,
+            //     method: "POST",
+            //     data: getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),
+            // })
+            // .then(function(){
+            //     $.ajax({
+            //         url: checkoutGuestStoreUrl,
+            //         type: "POST",
+            //         data: {
+            //             payment_method_id: 'dummy234'
+            //         },
+            //         success: function(response)
+            //         {
+            //             console.log(response);
+            //         }
+            //     })
+            // });
+        });
 
     </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Shipping;
+use App\Facades\ShoppingCart;
 use App\Traits\Customer\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -72,6 +73,18 @@ class Customer extends Model
     }
 
     /**
+     * Get the customers data from the shopping cart.
+     *
+     * @param  string $address
+     * @param  string $type
+     * @return \App\Customer
+     */
+    public static function fromShoppingCart()
+    {
+        return ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
+    }
+
+    /**
      * Add the shipping address to the customer.
      *
      * @param array $data
@@ -81,9 +94,9 @@ class Customer extends Model
     {
         request()->has('default_address') ? $this->user->removeOldDefaultAddress() : '';
 
-        $shipping = Shipping::fromForm($data);
+        $shipping = Shipping::fromData($data);
 
-        $this->shippings()->save($shipping);
+        return $this->shippings()->save($shipping);
     }
 
     /**
@@ -106,5 +119,15 @@ class Customer extends Model
     public function owns($model)
     {
         return $this->id == $model->customer_id;
+    }
+
+    /**
+     * Determine if the customer has an account.
+     *
+     * @return boolean
+     */
+    public function hasAccount()
+    {
+        return $this->user;
     }
 }

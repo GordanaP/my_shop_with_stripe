@@ -67,20 +67,16 @@ Route::get('checkout/guest', 'Checkout\Guest\CheckoutGuestController@index')
     ->name('checkout.guests.index');
 Route::post('checkout/guest', 'Checkout\Guest\CheckoutGuestController@store')
     ->name('checkout.guests.store');
-
-/**
- * CheckoutAddress
- */
-Route::post('checkouts/addresses', 'Checkout\CheckoutAddressController@store')
-    ->name('checkouts.addresses.store');
+Route::post('checkout/guest/addresses', 'Checkout\Guest\CheckoutGuestAddressController')
+    ->name('checkout.guests.addresses.store');
 
 /**
  * CheckoutConfirmation
  */
 Route::get('/checkout/success', 'Checkout\Confirmation\CheckoutSuccessController')
-    ->name('checkouts.success');
+    ->name('checkout.success');
 Route::get('/checkout/error', 'Checkout\Confirmation\CheckoutErrorController')
-    ->name('checkouts.error');
+    ->name('checkout.error');
 
 /**
  * Product

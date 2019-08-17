@@ -13,20 +13,36 @@
             <div class="col-md-6">
                 <section class="addresses-info w-4/5">
                     <div class="billing-address">
-                        @include('checkouts.partials.html._customer_address', [
-                            'title' => 'Billing address',
-                            'route' => route('customers.edit', $user->customer),
-                            'default_delivery' => '',
-                            'customer' => $user->customer,
-                        ])
+                        @withProfile($user)
+                            @include('checkouts.partials.html._customer_address', [
+                                'title' => 'Billing address',
+                                'route' => route('customers.edit', $user->customer),
+                                'default_delivery' => '',
+                                'customer' => $user->customer,
+                            ])
+                        @else
+                            @include('checkouts.partials.html._guest_address', [
+                                'title' => 'Billing address',
+                                'address' => 'billing'
+                            ])
+                        @endwithProfile
                     </div>
 
                     <div class="shipping-address mt-8">
-                        @include('checkouts.partials.html._customer_address', [
-                            'title' => 'Shipping address',
-                            'route' => route('users.select.delivery', $user),
-                            'customer' => $shipping ?: ($default_delivery ?: $user->customer),
-                        ])
+                        @withProfile($user)
+                            @include('checkouts.partials.html._customer_address', [
+                                'title' => 'Shipping address',
+                                'route' => route('users.select.delivery', $user),
+                                'customer' => $shipping ?: ($default_delivery ?: $user->customer),
+                            ])
+                        @else
+                            <div class="hidden" id="guestShippingAddress">
+                                @include('checkouts.partials.html._guest_address', [
+                                    'title' => 'Shipping address',
+                                    'address' => 'shipping'
+                                ])
+                            </div>
+                        @endwithProfile
                     </div>
                 </section>
             </div>
@@ -52,26 +68,33 @@
 @section('scripts')
     <script>
 
+        var registeredCustomer = @json($user->hasProfile());
+        var registeredShippingAddress = @json($user->getCheckoutShippingAddress($shipping));
+
         var checkoutButton = document.querySelector('#checkoutButton');
+        var checkoutUserStoreUrl = "{{ route('checkout.users.store', $user) }}";
 
-        var usersCheckoutStoreUrl = "{{ route('checkout.users.store', $user)}}";
-
-        var shippingAddress = @json($user->getCheckoutShippingAddress($shipping));
+        var hiddenAddress = document.querySelector('#guestShippingAddress');
+        var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
+        var billing = 'billing';
+        var shipping = 'shipping';
+        var addressFields = [
+            'first_name', 'last_name', 'street_address', 'postal_code', 'city',
+            'country', 'phone', 'email'
+        ];
 
         checkoutButton.addEventListener('click', function() {
-            clearServerSideErrors()
 
             $.ajax({
-                url: usersCheckoutStoreUrl,
-                method: 'POST',
+                url: checkoutUserStoreUrl,
+                type: "POST",
                 data: {
-                    shipping_address: shippingAddress
+                    address: registeredCustomer ? registeredShippingAddress : getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),
+                    payment_method_id: 'dummy234'
                 },
-                success: function(result)
+                success: function(response)
                 {
-                    console.log(result)
-
-                    // redirectTo(result.redirectToUrl)
+                    console.log(response);
                 }
             });
         });

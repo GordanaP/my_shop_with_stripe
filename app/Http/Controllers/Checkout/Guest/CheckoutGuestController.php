@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Checkout\Guest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Actions\CompleteOrderInfoAction;
 
 class CheckoutGuestController extends Controller
 {
@@ -17,14 +18,9 @@ class CheckoutGuestController extends Controller
         return view('checkouts.guests.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
+        return (new CompleteOrderInfoAction())->execute();
     }
 
     /**
@@ -33,53 +29,20 @@ class CheckoutGuestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     $paymentIntent = '1234567';
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    //     // $order = (new CompleteOrderShippingAction($this->getCustomer()))->execute();
+    //     $order = (new CompleteOrderShippingAction())->execute();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    //     $order->completePayment($paymentIntent);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    //     $this->getCustomer()->placeOrder($order);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    //     return response([
+    //         'message' => 'success'
+    //     ]);
+    // }
+    //
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Facades\ShoppingCart;
 use App\Traits\Customer\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,13 +56,18 @@ class Shipping extends Model
      * @param  array $data
      * @return \App\Shipping
      */
-    public static function fromForm(array $data)
+    public static function fromData(array $data)
     {
         $data = (new static)->fill($data);
 
         request()->has('default_address') ? $data['default_address'] = 1 : '';
 
         return $data;
+    }
+
+    public static function fromShoppingCart()
+    {
+        return ShoppingCart::fromSession()->getOwner('address', 'shipping')->toArray();
     }
 
     /**

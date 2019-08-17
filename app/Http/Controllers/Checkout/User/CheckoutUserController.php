@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Checkout\User;
 
 use App\User;
-use App\Shipping;
 use Illuminate\Http\Request;
-use App\Facades\ShoppingCart;
 use App\Http\Controllers\Controller;
 use App\Actions\CompletePurchaseAction;
+use App\Actions\CompleteOrderInfoAction;
 
 class CheckoutUserController extends Controller
 {
@@ -25,14 +24,9 @@ class CheckoutUserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Request $request, User $user)
     {
-        //
+        return (new CompleteOrderInfoAction($user))->execute();
     }
 
     /**
@@ -41,59 +35,20 @@ class CheckoutUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
-    {
-        $paymentIntent = '1234567';
+    // public function store(Request $request, User $user)
+    // {
+    //     $paymentIntent = '1234567';
 
-        (new CompletePurchaseAction($user))->execute($paymentIntent);
+    //     // $order = (new CompleteOrderShippingAction($user->customer))->execute();
+    //     $order = (new CompleteOrderShippingAction($user))->execute();
 
-        return response([
-            'message' => 'success'
-        ]);
-    }
+    //     $order->completePayment($paymentIntent);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
+    //     $user->customer->placeOrder($order);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
+    //     return response([
+    //         'message' => 'success'
+    //     ]);
+    // }
+    //
 }

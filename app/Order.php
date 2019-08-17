@@ -34,13 +34,16 @@ class Order extends Model
 
     public static function fromShoppingCart()
     {
-        $shipping = collect(request()->shipping_address);
+        $orderSummary = ShoppingCart::fromSession()->getSummary()->toArray();
 
-        $data = ShoppingCart::fromSession()->getSummary()->union([
-            'shipping_id' => $shipping->has('customer_id') ? $shipping->get('id') : null
-        ])->toArray();
+        return (new static)->fill($orderSummary);
+    }
 
-        return (new static)->fill($data);
+    public function completeShipping($shippingId)
+    {
+        $this->shipping_id = $shippingId;
+
+        return $this;
     }
 
     public function completePayment($paymentIntent)
