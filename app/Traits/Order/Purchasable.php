@@ -37,7 +37,7 @@ trait Purchasable
      */
     protected function createGuestShippingId($customer)
     {
-        $shippingAddress = Shipping::fromShoppingCart();
+        $shippingAddress = Shipping::getFromShoppingCart();
 
         return $shippingAddress ? $customer->addShipping($shippingAddress)->id : null;
     }
@@ -51,6 +51,6 @@ trait Purchasable
 
     private function address()
     {
-        return collect(request()->address);
+        return collect(request('address'));
     }
 }

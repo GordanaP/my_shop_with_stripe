@@ -52,7 +52,7 @@
         clearServerSideErrorOnNewInput();
 
         var checkoutButton = document.querySelector('#checkoutButton');
-        var checkoutGuestStoreUrl = "{{ route('checkout.guests.store') }}";
+        var checkoutStoreUrl = "{{ route('checkout.store') }}";
         var checkoutGuestAddressStoreUrl = "{{ route('checkout.guests.addresses.store') }}";
 
         var hiddenAddress = document.querySelector('#guestShippingAddress');
@@ -73,7 +73,7 @@
             })
             .done(function() {
                 $.ajax({
-                    url: checkoutGuestStoreUrl,
+                    url: checkoutStoreUrl,
                     type: "POST",
                     data: {
                         payment_method_id: 'dummy234'
@@ -87,26 +87,6 @@
             .fail(function() {
                 console.log('failed')
             });
-
-
-            // $.ajax({
-            //     url: checkoutGuestAddressStoreUrl,
-            //     method: "POST",
-            //     data: getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),
-            // })
-            // .then(function(){
-            //     $.ajax({
-            //         url: checkoutGuestStoreUrl,
-            //         type: "POST",
-            //         data: {
-            //             payment_method_id: 'dummy234'
-            //         },
-            //         success: function(response)
-            //         {
-            //             console.log(response);
-            //         }
-            //     })
-            // });
         });
 
     </script>

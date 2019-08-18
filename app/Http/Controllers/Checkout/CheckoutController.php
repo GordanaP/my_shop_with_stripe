@@ -3,50 +3,33 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\User;
-use App\Customer;
-use App\Shipping;
 use Illuminate\Http\Request;
-use App\Facades\ShoppingCart;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
+use App\Services\Actions\RecordUserPurchase;
+use App\Services\Actions\RecordGuestPurchase;
+use App\Services\Actions\RecordCustomerPurchase;
 
 class CheckoutController extends Controller
 {
-    // public function index(User $user = null)
-    // {
-    //     return view('checkouts.index')->with([
-    //         'user' => $user ?? '',
-    //         'selected_delivery' => optional($user)->getDefaultAddress()
-    //     ]);
-    // }
+    public function store(Request $request, User $user = null)
+    {
+        $paymentIntent = '1234567';
 
-    // public function store(Request $request, User $user = null, Shipping $shipping = null)
-    // {
-    //     return $user ?? 'no shipping';
+        return $this->recordPurchases($user)->handle($paymentIntent);
+    }
 
-    //     // $billingAddress = ShoppingCart::fromSession()->getOwner('address', 'billing');
-    //     // $shippingAddress = ShoppingCart::fromSession()->getOwner('address', 'shipping');
+    protected function recordPurchases($user = null)
+    {
+        if(! $user)
+        {
+            return new RecordGuestPurchase();
+        }
 
-    //     // if ($billingAddress->isNotEmpty()) {
+        if(! $user->hasProfile())
+        {
+            return new RecordUserPurchase($user);
+        }
 
-    //     //     $customer = $user ? optional($user)->addCustomer($billingAddress->toArray())
-    //     //           : Customer::create($billingAddress->toArray());
-    //     // }
-    //     // else
-    //     // {
-    //     //     $customer = $user->customer;
-    //     // }
-
-    //     // if ($shippingAddress->isNotEmpty()) {
-
-    //     //     $shipping = $customer->addShipping($shippingAddress->toArray());
-    //     // }
-
-    //     // Session::forget('address');
-
-    //     // return response([
-    //     //     'message' => 'success',
-    //     //     'redirectToUrl' => route('checkouts.success')
-    //     // ]);
-    // }
+        return new RecordCustomerPurchase($user);
+    }
 }

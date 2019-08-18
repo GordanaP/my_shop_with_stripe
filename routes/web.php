@@ -53,10 +53,12 @@ Route::delete('carts/{product}', 'Cart\CartItemController@destroy')->name('carts
 /**
  * Checkout User
  */
+Route::post('checkout/{user?}', 'Checkout\CheckoutController@store')
+    ->name('checkout.store');
 Route::get('checkout/users/{user}', 'Checkout\User\CheckoutUserController@index')
     ->name('checkout.users.index');
-Route::post('checkout/users/{user}', 'Checkout\User\CheckoutUserController@store')
-    ->name('checkout.users.store');
+// Route::post('checkout/users/{user}', 'Checkout\User\CheckoutUserController@store')
+//     ->name('checkout.users.store');
 Route::get('checkout/users/select-delivery-address/{user}/{shipping?}', 'Checkout\User\CheckoutUserShippingController@index')
     ->name('checkout.users.shippings.index');
 
@@ -65,8 +67,8 @@ Route::get('checkout/users/select-delivery-address/{user}/{shipping?}', 'Checkou
  */
 Route::get('checkout/guest', 'Checkout\Guest\CheckoutGuestController@index')
     ->name('checkout.guests.index');
-Route::post('checkout/guest', 'Checkout\Guest\CheckoutGuestController@store')
-    ->name('checkout.guests.store');
+// Route::post('checkout/guest', 'Checkout\Guest\CheckoutGuestController@store')
+//     ->name('checkout.guests.store');
 Route::post('checkout/guest/addresses', 'Checkout\Guest\CheckoutGuestAddressController')
     ->name('checkout.guests.addresses.store');
 
@@ -87,4 +89,4 @@ Route::resource('products', 'Product\ProductController');
 /**
  * Test
  */
-Route::post('/test', 'TestController@store')->name('tests.store');
+Route::post('/test/{user?}', 'TestController@store')->name('tests.store');

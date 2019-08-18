@@ -62,7 +62,6 @@
             </div><!-- /.col-md-6 -->
         </div><!-- /.row -->
     </form>
-
 @endsection
 
 @section('scripts')
@@ -72,7 +71,7 @@
         var registeredShippingAddress = @json($user->getCheckoutShippingAddress($shipping));
 
         var checkoutButton = document.querySelector('#checkoutButton');
-        var checkoutUserStoreUrl = "{{ route('checkout.users.store', $user) }}";
+        var checkoutStoreUrl = "{{ route('checkout.store', $user) }}";
 
         var hiddenAddress = document.querySelector('#guestShippingAddress');
         var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
@@ -86,7 +85,7 @@
         checkoutButton.addEventListener('click', function() {
 
             $.ajax({
-                url: checkoutUserStoreUrl,
+                url: checkoutStoreUrl,
                 type: "POST",
                 data: {
                     address: registeredCustomer ? registeredShippingAddress : getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),

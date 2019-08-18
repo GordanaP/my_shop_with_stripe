@@ -77,7 +77,7 @@ class Customer extends Model
      *
      * @return \App\Customer
      */
-    public static function fromShoppingCart()
+    public static function createFromShoppingCart()
     {
         $customer = ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
 

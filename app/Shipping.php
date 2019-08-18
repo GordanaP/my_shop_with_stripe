@@ -65,7 +65,7 @@ class Shipping extends Model
         return $data;
     }
 
-    public static function fromShoppingCart()
+    public static function getFromShoppingCart()
     {
         return ShoppingCart::fromSession()->getOwner('address', 'shipping')->toArray();
 
