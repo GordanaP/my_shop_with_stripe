@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Checkout\Guest;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Actions\CompletePurchaseAction;
 
 class CheckoutGuestController extends Controller
 {
@@ -17,12 +16,4 @@ class CheckoutGuestController extends Controller
     {
         return view('checkouts.guests.index');
     }
-
-    public function store(Request $request)
-    {
-        $paymentIntent = '123457';
-
-        return (new CompletePurchaseAction())->execute($paymentIntent);
-    }
-
 }

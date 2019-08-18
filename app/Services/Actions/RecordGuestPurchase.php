@@ -4,22 +4,19 @@ namespace App\Services\Actions;
 
 use App\Customer;
 use App\Shipping;
-use App\Traits\Order\Completable;
+use App\Services\Actions\CompleteOrder;
 
 class RecordGuestPurchase
 {
-    use Completable;
-
     public function handle($paymentIntent)
     {
         $customer = Customer::createFromShoppingCart();
+        $shippingId = $this->getShippingId($customer);
 
-        $order = $this->completeOrder($this->getShipping($customer), $paymentIntent);
-
-        return $customer->placeOrder($order);
+        return (new CompleteOrder($customer, $shippingId))->handle($paymentIntent);
     }
 
-    protected function getShipping($customer)
+    protected function getShippingId($customer)
     {
         $shipping = Shipping::getFromShoppingCart();
 

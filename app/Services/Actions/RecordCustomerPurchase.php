@@ -3,12 +3,10 @@
 namespace App\Services\Actions;
 
 use App\User;
-use App\Traits\Order\Completable;
+use App\Services\Actions\CompleteOrder;
 
 class RecordCustomerPurchase
 {
-    use Completable;
-
     public $user;
 
     public function __construct(User $user)
@@ -18,12 +16,13 @@ class RecordCustomerPurchase
 
     public function handle($paymentIntent)
     {
-        $order = $this->completeOrder($this->getShipping(), $paymentIntent);
+        $customer = $this->user->customer;
+        $shippingId = $this->getShippingId();
 
-        return $this->user->customer->placeOrder($order);
+        return (new CompleteOrder($customer, $shippingId))->handle($paymentIntent);
     }
 
-    protected function getShipping()
+    protected function getShippingId()
     {
         $address = collect(request('address'));
 
