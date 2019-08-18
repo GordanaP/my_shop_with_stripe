@@ -2,26 +2,39 @@
 
 namespace App\Traits\Order;
 
-use App\Customer;
 use App\Shipping;
 
 trait Purchasable
 {
+    /**
+     * Get the registered customer's shipping address id.
+     *
+     * @return integer | null
+     */
     protected function getRegisteredShippingId()
     {
-        $shippingAddress = collect(request()->address);
-
-        return $shippingAddress->has('customer_id') ? $shippingAddress->get('id') : null;
+        return $this->address()->has('customer_id') ? $this->address()->get('id') : null;
     }
 
+    /**
+     * Create registered user's shipping address id.
+     *
+     * @param  \App\Customer $customer
+     * @return integer | null
+     */
     protected function createRegisteredShippingId($customer)
     {
-        $address = collect(request()->address);
-        $shipping = $address->get('shipping');
+        $shipping = $this->address()->get('shipping');
 
-        return $address->has('shipping') ? $customer->addShipping($shipping)->id : null;
+        return $this->address()->has('shipping') ? $customer->addShipping($shipping)->id : null;
     }
 
+    /**
+     * Create the guest customer's shipping address id.
+     *
+     * @param  \App\Customer $customer
+     * @return integer | null
+     */
     protected function createGuestShippingId($customer)
     {
         $shippingAddress = Shipping::fromShoppingCart();
@@ -29,23 +42,15 @@ trait Purchasable
         return $shippingAddress ? $customer->addShipping($shippingAddress)->id : null;
     }
 
-    protected function getRegisteredCustomer()
+    protected function createRegisteredCustomer($user)
     {
-        return $this->user->customer;
+        $billingAddress = $this->address()->get('billing');
+
+        return $user->addCustomer($billingAddress);
     }
 
-    protected function createRegisteredCustomer()
+    private function address()
     {
-        $address = collect(request()->address);
-        $billingAddress = $address->get('billing');
-
-        return $this->user->addCustomer($billingAddress);
-    }
-
-    protected function createGuestCustomer()
-    {
-        $billingAddress = Customer::fromShoppingCart();
-
-        return Customer::create($billingAddress);
+        return collect(request()->address);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\User;
 use App\Order;
 use App\Traits\Order\Purchasable;
 use App\Actions\CreateOrderCustomerAction;
@@ -12,7 +13,7 @@ class CompletePurchaseAction
 
     public $user;
 
-    public function __construct($user = null)
+    public function __construct(User $user = null)
     {
         $this->user =  $user;
     }
@@ -45,14 +46,11 @@ class CompletePurchaseAction
             return $this->createRegisteredShippingId($customer);
         }
 
-        if(! $this->user)
-        {
-            return $this->createGuestShippingId($customer);
-        }
+        return $this->createGuestShippingId($customer);
     }
 
     public function getCustomer($user)
     {
-        return (new CreateOrderCustomerAction($user))->execute();
+        return (new CreateOrderCustomerAction())->execute($user);
     }
 }

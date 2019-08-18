@@ -73,15 +73,15 @@ class Customer extends Model
     }
 
     /**
-     * Get the customers data from the shopping cart.
+     * Create the customer from the shopping cart's data.
      *
-     * @param  string $address
-     * @param  string $type
      * @return \App\Customer
      */
     public static function fromShoppingCart()
     {
-        return ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
+        $customer = ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
+
+        return static::create($customer);
     }
 
     /**

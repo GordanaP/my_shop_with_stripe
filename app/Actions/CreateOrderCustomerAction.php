@@ -2,31 +2,24 @@
 
 namespace App\Actions;
 
+use App\Customer;
 use App\Traits\Order\Purchasable;
 
 class CreateOrderCustomerAction
 {
     use Purchasable;
 
-    public $user;
-
-    public function __construct($user = null)
+    public function execute($user = null)
     {
-        $this->user = $user;
-    }
-
-    public function execute()
-    {
-        if($this->user && $this->user->hasProfile()) {
-            return $this->getRegisteredCustomer();
+        if($user && $user->hasProfile()) {
+            return $user->customer;
         }
 
-        if($this->user && ! $this->user->hasProfile()) {
-            return $this->createRegisteredCustomer();
+        if($user && ! $user->hasProfile()) {
+            return $this->createRegisteredCustomer($user);
         }
 
-        if(! $this->user) {
-            return $this->createGuestCustomer();
-        }
+        return Customer::fromShoppingCart();
     }
 }
+
