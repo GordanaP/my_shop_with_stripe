@@ -14,7 +14,7 @@ trait HasProfile
      */
     public function addCustomer(array $data)
     {
-        $customer = Customer::fromForm($data);
+        $customer = Customer::getFromForm($data);
 
         return $this->customer()->save($customer);
     }

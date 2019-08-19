@@ -65,10 +65,14 @@ class Shipping extends Model
         return $data;
     }
 
+    /**
+     * Get the shipping address from the shopping cart.
+     *
+     * @return array
+     */
     public static function getFromShoppingCart()
     {
         return ShoppingCart::fromSession()->getOwner('address', 'shipping')->toArray();
-
     }
 
     /**

@@ -67,7 +67,7 @@ class Customer extends Model
      * @param  array $data
      * @return \App\Customer
      */
-    public static function fromForm(array $data)
+    public static function getFromForm(array $data)
     {
         return (new static)->fill($data);
     }
@@ -77,12 +77,12 @@ class Customer extends Model
      *
      * @return \App\Customer
      */
-    public static function createFromShoppingCart()
-    {
-        $customer = ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
+    // public static function createFromShoppingCart()
+    // {
+    //     $customer = ShoppingCart::fromSession()->getOwner('address', 'billing')->toArray();
 
-        return static::create($customer);
-    }
+    //     return static::create($customer);
+    // }
 
     /**
      * Add the shipping address to the customer.

@@ -7,22 +7,58 @@ use App\Services\Actions\CompleteOrder;
 
 class RecordCustomerPurchase
 {
+    /**
+     * The user.
+     *
+     * @var \App\User
+     */
     public $user;
 
+    /**
+     * Create a new class instance.
+     *
+     * @param \App\User $user
+     * @return void
+     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
+    /**
+     * Handle the registered customer's purchase.
+     *
+     * @param  string $paymentIntent
+     * @return void
+     */
     public function handle($paymentIntent)
     {
-        $customer = $this->user->customer;
-        $shippingId = $this->getShippingId();
+        $customer = $this->getBillingAddress($this->user);
 
-        return (new CompleteOrder($customer, $shippingId))->handle($paymentIntent);
+        $shipping = $this->getShippingAddress();
+
+        $order = (new CompleteOrder)->handle($shipping, $paymentIntent);
+
+        $customer->placeOrder($order);
     }
 
-    protected function getShippingId()
+    /**
+     * Get the billing address;
+     *
+     * @param  \App\User $user
+     * @return \App\Customer
+     */
+    protected function getBillingAddress($user)
+    {
+        return $user->customer;
+    }
+
+    /**
+     * Get the shipping address.
+     *
+     * @return integer
+     */
+    protected function getShippingAddress()
     {
         $address = collect(request('address'));
 
