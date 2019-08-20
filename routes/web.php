@@ -51,14 +51,20 @@ Route::patch('carts/{product}', 'Cart\CartItemController@update')->name('carts.u
 Route::delete('carts/{product}', 'Cart\CartItemController@destroy')->name('carts.destroy');
 
 /**
+ * CheckoutConfirmation
+ */
+Route::get('/checkout-confirm-success', 'Checkout\Confirmation\CheckoutSuccessController')
+    ->name('checkout.confirm.success');
+Route::get('/checkout-confirm-error', 'Checkout\Confirmation\CheckoutErrorController')
+    ->name('checkout.confirm.error');
+
+/**
  * Checkout User
  */
 Route::post('checkout/{user?}', 'Checkout\CheckoutController@store')
     ->name('checkout.store');
 Route::get('checkout/users/{user}', 'Checkout\User\CheckoutUserController@index')
     ->name('checkout.users.index');
-// Route::post('checkout/users/{user}', 'Checkout\User\CheckoutUserController@store')
-//     ->name('checkout.users.store');
 Route::get('checkout/users/select-delivery-address/{user}/{shipping?}', 'Checkout\User\CheckoutUserShippingController@index')
     ->name('checkout.users.shippings.index');
 
@@ -67,18 +73,8 @@ Route::get('checkout/users/select-delivery-address/{user}/{shipping?}', 'Checkou
  */
 Route::get('checkout/guest', 'Checkout\Guest\CheckoutGuestController@index')
     ->name('checkout.guests.index');
-// Route::post('checkout/guest', 'Checkout\Guest\CheckoutGuestController@store')
-//     ->name('checkout.guests.store');
 Route::post('checkout/guest/addresses', 'Checkout\Guest\CheckoutGuestAddressController')
     ->name('checkout.guests.addresses.store');
-
-/**
- * CheckoutConfirmation
- */
-Route::get('/checkout/success', 'Checkout\Confirmation\CheckoutSuccessController')
-    ->name('checkout.success');
-Route::get('/checkout/error', 'Checkout\Confirmation\CheckoutErrorController')
-    ->name('checkout.error');
 
 /**
  * Product

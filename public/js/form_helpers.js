@@ -116,11 +116,9 @@ function swalAlertBox(message, type="success", title="Success!")
  * @param  string redirectToUrl
  * @return void
  */
-function redirectTo(redirectToUrl)
+function redirectTo(url)
 {
-    window.location.reload(true);
-
-    location.href = redirectToUrl
+    window.location.replace(url)
 }
 
 /**

@@ -49,11 +49,9 @@
 @section('scripts')
     <script>
 
-        clearServerSideErrorOnNewInput();
-
         var checkoutButton = document.querySelector('#checkoutButton');
-        var checkoutStoreUrl = "{{ route('checkout.store') }}";
         var checkoutGuestAddressStoreUrl = "{{ route('checkout.guests.addresses.store') }}";
+        var checkoutStoreUrl = "{{ route('checkout.store') }}";
 
         var hiddenAddress = document.querySelector('#guestShippingAddress');
         var toggleHiddenAddressCheckbox = document.querySelector('#toggleShippingAddress');
@@ -64,7 +62,20 @@
             'country', 'phone', 'email'
         ];
 
+        clearServerSideErrorOnNewInput();
+
+        if(toggleHiddenAddressCheckbox)
+        {
+            toggleHiddenAddressCheckbox.addEventListener('change', function(event) {
+                if ( ! event.target.checked) {
+                    clearHiddenServerSideErrorsPureJS(hiddenAddress)
+                }
+            });
+        }
+
         checkoutButton.addEventListener('click', function() {
+
+            clearServerSideErrors()
 
             $.ajax({
                 url: checkoutGuestAddressStoreUrl,
@@ -78,14 +89,23 @@
                     data: {
                         payment_method_id: 'dummy234'
                     },
-                    success: function(response)
+                    success: function(result)
                     {
-                        console.log(response);
+                        clearFormFields()
+                        redirectTo(result.redirectTo)
+                    },
+                    error: function(result)
+                    {
+                        var errors = result.responseJSON.errors;
+
+                        displayServerSideErrors(errors)
                     }
                 });
             })
-            .fail(function() {
-                console.log('failed')
+            .fail(function(response) {
+                var errors = response.responseJSON.errors;
+
+                displayServerSideErrors(errors)
             });
         });
 

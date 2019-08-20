@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Checkout\Guest;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CheckoutGuestController extends Controller

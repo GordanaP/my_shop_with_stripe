@@ -3,9 +3,10 @@
 namespace App\Services\Actions;
 
 use App\User;
-use App\Services\Actions\CompleteOrder;
+use App\Interfaces\Purchase;
+use App\Services\Actions\PlaceOrder;
 
-class RecordCustomerPurchase
+class CustomerPurchase implements Purchase
 {
     /**
      * The user.
@@ -15,31 +16,36 @@ class RecordCustomerPurchase
     public $user;
 
     /**
+     * The payment
+     * @var string
+     */
+    public $payment;
+
+    /**
      * Create a new class instance.
      *
      * @param \App\User $user
+     * @param string $payment
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $payment)
     {
         $this->user = $user;
+        $this->payment = $payment;
     }
 
     /**
      * Handle the registered customer's purchase.
      *
-     * @param  string $paymentIntent
      * @return void
      */
-    public function handle($paymentIntent)
+    public function handle()
     {
         $customer = $this->getBillingAddress($this->user);
 
         $shipping = $this->getShippingAddress();
 
-        $order = (new CompleteOrder)->handle($shipping, $paymentIntent);
-
-        $customer->placeOrder($order);
+        (new PlaceOrder($customer))->complete($shipping, $this->payment);
     }
 
     /**

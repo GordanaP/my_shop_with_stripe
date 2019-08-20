@@ -4,25 +4,41 @@ namespace App\Services\Actions;
 
 use App\Customer;
 use App\Shipping;
-use App\Services\Actions\CompleteOrder;
+use App\Interfaces\Purchase;
+use App\Services\Actions\PlaceOrder;
 
-class RecordGuestPurchase
+class GuestPurchase implements Purchase
 {
+    /**
+     * The payment.
+     *
+     * @var string
+     */
+    public $payment;
+
+    /**
+     * Create a new class instance.
+     *
+     * @param string $payment
+     * @return void
+     */
+    public function __construct($payment)
+    {
+        $this->payment = $payment;
+    }
+
     /**
      * Handle the guest's purchase.
      *
-     * @param  string $paymentIntent
      * @return void
      */
-    public function handle($paymentIntent)
+    public function handle()
     {
         $customer = $this->getBillingAddress();
 
         $shipping = $this->getShippingAddress($customer);
 
-        $order = (new CompleteOrder)->handle($shipping, $paymentIntent);
-
-        $customer->placeOrder($order);
+        (new PlaceOrder($customer))->complete($shipping, $this->payment);
     }
 
     /**

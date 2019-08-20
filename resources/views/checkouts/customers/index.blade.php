@@ -82,7 +82,11 @@
             'country', 'phone', 'email'
         ];
 
+        clearServerSideErrorOnNewInput();
+
         checkoutButton.addEventListener('click', function() {
+
+            clearServerSideErrors()
 
             $.ajax({
                 url: checkoutStoreUrl,
@@ -91,9 +95,16 @@
                     address: registeredCustomer ? registeredShippingAddress : getCheckedAddress(toggleHiddenAddressCheckbox, billing, shipping, addressFields),
                     payment_method_id: 'dummy234'
                 },
-                success: function(response)
+                success: function(result)
                 {
-                    console.log(response);
+                    clearFormFields()
+                    redirectTo(result.redirectTo)
+                },
+                error: function(result)
+                {
+                    var errors = result.responseJSON.errors;
+
+                    displayServerSideErrors(errors)
                 }
             });
         });
