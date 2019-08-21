@@ -5,7 +5,7 @@ namespace App\Services\Actions;
 use App\Order;
 use App\Customer;
 
-class PlaceOrder
+class PlaceOrderAction
 {
     /**
      * The customer.
@@ -18,7 +18,6 @@ class PlaceOrder
      * Create a new class instance.
      *
      * @param  Customer $customer
-     * @return void
      */
     public function __construct(Customer $customer)
     {
@@ -30,7 +29,7 @@ class PlaceOrder
      *
      * @param  int $shipping
      * @param  string $payment
-     * @return \App\Order
+     * @return  \App\Order
      */
     public function complete($shipping, $payment)
     {
@@ -44,11 +43,11 @@ class PlaceOrder
      *
      * @param  int $shipping
      * @param  string $payment
-     * @return \App\Order $order
+     * @return \App\Order
      */
-    public function getOrder($shipping, $payment)
+    protected function getOrder($shipping, $payment)
     {
-        return Order::fromShoppingCart()
+        return Order::getFromShoppingCart()
             ->completeShipping($shipping)
             ->completePayment($payment);
     }

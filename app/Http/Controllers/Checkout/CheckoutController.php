@@ -20,7 +20,7 @@ class CheckoutController extends Controller
     {
         $payment = '1234567';
 
-        (new PurchaseFactory)->create($user, $payment)->handle();
+        (new PurchaseFactory)->createPurchase($user, $payment)->handle();
 
         return response([
             'redirectTo' => route('checkout.confirm.success')

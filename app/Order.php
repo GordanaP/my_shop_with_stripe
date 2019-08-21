@@ -32,7 +32,7 @@ class Order extends Model
         return $this->belongsTo(Shipping::class);
     }
 
-    public static function fromShoppingCart()
+    public static function getFromShoppingCart()
     {
         $orderSummary = ShoppingCart::fromSession()->getSummary()->toArray();
 
